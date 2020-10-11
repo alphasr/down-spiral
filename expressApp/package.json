@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tslint --project tsconfig.json && tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":" npm run build && node ./lib/server.js"
   },
   "author": "",
   "license": "ISC",

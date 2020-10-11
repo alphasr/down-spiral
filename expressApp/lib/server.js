@@ -12,6 +12,6 @@ let server = app.listen(port, () => {
     console.log('Server started on: ' + port);
 });
 // attach socket to the node server
-let io_1 = require('socket.io').listen(server);
-require('./socket')(io_1);
+let ioNew = require('socket.io').listen(server);
+require('./socket')(ioNew);
 //# sourceMappingURL=server.js.map
