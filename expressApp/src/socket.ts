@@ -1,9 +1,9 @@
-const socket = io => {
-    io.on('connection', client => {
+const socket = (io:any) => {
+    io.on('connection', (client:any) => {
       console.log('New Connection');
   
       // socket event for client subscription
-      client.on('subscribeToDateEvent', interval => {
+      client.on('subscribeToDateEvent', (interval:any) => {
         console.log('Client is subscribing with interval: ', interval);
         
         // emit message to the client side

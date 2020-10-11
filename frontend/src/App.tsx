@@ -11,7 +11,7 @@ function App() {
   const [msg, setMsg] = useState('');
   // establish socket connection
   useEffect(() => {
-    setSocket(io('http://localhost:4000'));
+    setSocket(io('/'));
   }, []);
 
   // subscribe to the socket event
