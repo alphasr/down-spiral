@@ -14,8 +14,10 @@ The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
 
-## Learn More
+## down-spiral
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+down-spiral is a development tool used to visualize and debug data.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The serve and the socket is made in typescript located in the expressApp directory, the frontend is taken of care of by the react-app present in the frontend directory.
+
+### `Still in development`
