@@ -1,19 +1,76 @@
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.css";
 
-import React, { useEffect, useState } from "react";
-import io from "socket.io-client";
+import React, { useCallback, useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
-import { subscribeToTimer } from "./api";
+import { spiralLogs } from "./api";
+import Table from "react-bootstrap/esm/Table";
+
+interface IPayload {
+  id?: string;
+  msg: string;
+  dt: Date;
+}
+interface IPayloadList {
+  list: IPayload[];
+}
 
 function App() {
-  const [timestamp, setTimestamp] = useState();
+  const [payload, setPayload] = useState<IPayloadList>({
+    list: [{ id: uuidv4(), msg: "Logging started", dt: new Date() }],
+  });
+
+  // const handleSetPayload = (payloadNew: IPayload) => {
+  //   if (payload?.list) {
+  //     return setPayload({ ...payload, list: [...payload.list, payloadNew] });
+  //   }
+  //   return payload;
+  // };
+
   useEffect(() => {
-    subscribeToTimer((err: any, timestamp: any) => setTimestamp(timestamp));
-  }, []);
+    const handleSetPayload = (payloadNew: string) => {
+      //console.log("LOL", payloadNew);
+      const uid = uuidv4();
+      const parsedPayload: IPayload = JSON.parse(payloadNew);
+      if (payload?.list) {
+        //  console.log("Inside set payload :", payloadNew.msg);
+        return setPayload({
+          ...payload,
+          list: [
+            ...payload.list,
+            { id: uid, msg: parsedPayload.msg, dt: parsedPayload.dt },
+          ],
+        });
+      }
+      //console.log("Inside callback :", payloadNew);
+      return payload;
+    };
+    spiralLogs((payload: string) => handleSetPayload(payload));
+  }, [payload]);
 
   return (
     <div>
-      <h1>{timestamp}</h1>
+      <Table striped bordered hover variant="dark">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Message</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {payload?.list.map((payload: IPayload) => (
+            <React.Fragment key={payload.id}>
+              <tr>
+                <td>{payload.id}</td>
+                <td>{payload.msg}</td>
+                <td>{payload.dt.toString()}</td>
+              </tr>
+            </React.Fragment>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 }

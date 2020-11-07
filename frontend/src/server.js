@@ -1,14 +1,28 @@
+const { parseJsonText } = require("typescript");
+
 const ioServer = require("socket.io")();
 
+// ioServer.on("connection", (client) => {
+//   client.on("room", function (room) {
+//     console.log("joined room", room);
+//     client.join(room);
+//   });
+//   client.on("test", (data) => {
+//     dataJson = JSON.parse(data);
+//     console.log("client is subscribing to timer with interval ", dataJson.msg);
+
+//     client.in("myRoom").emit("temp", dataJson);
+//   });
+// });
 ioServer.on("connection", (client) => {
-  client.on("subscribeToTimer", (interval) => {
-    console.log("client is subscribing to timer with interval ", interval);
-    setInterval(() => {
-      client.emit("timer", new Date());
-    }, interval);
+  client.on("room", function (room) {
+    client.join(room);
   });
   client.on("test", (data) => {
-    console.log("client is subscribing to timer with interval ", data);
+    dataJson = JSON.parse(data);
+    // console.log("client is subscribing to timer with interval ", dataJson.msg);
+
+    client.in("myRoom").emit("temp", JSON.stringify(dataJson));
   });
 });
 
