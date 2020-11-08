@@ -1,25 +1,23 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { spiralLogs } from "./api";
 import Table from "react-bootstrap/esm/Table";
-
-interface IPayload {
-  id?: string;
-  msg: string;
-  dt: Date;
-}
-interface IPayloadList {
-  list: IPayload[];
-}
+import TableLog from "./pages/tableLog";
+import { Route, Switch, Redirect } from "react-router-dom";
+import {
+  ITableLogsState,
+  initialTableLogsState,
+  ITableData,
+} from "./store/reducers/tableLogsReducer";
 
 function App() {
-  const [payload, setPayload] = useState<IPayloadList>({
-    list: [{ id: uuidv4(), msg: "Logging started", dt: new Date() }],
-  });
+  const [payload, setPayload] = useState<ITableLogsState>(
+    initialTableLogsState
+  );
 
   // const handleSetPayload = (payloadNew: IPayload) => {
   //   if (payload?.list) {
@@ -32,14 +30,20 @@ function App() {
     const handleSetPayload = (payloadNew: string) => {
       //console.log("LOL", payloadNew);
       const uid = uuidv4();
-      const parsedPayload: IPayload = JSON.parse(payloadNew);
-      if (payload?.list) {
+      const parsedPayload: ITableData = JSON.parse(payloadNew);
+      if (payload?.data) {
         //  console.log("Inside set payload :", payloadNew.msg);
         return setPayload({
           ...payload,
-          list: [
-            ...payload.list,
-            { id: uid, msg: parsedPayload.msg, dt: parsedPayload.dt },
+          data: [
+            ...payload.data,
+            {
+              id: uuidv4(),
+              timestamp: new Date(),
+              hostName: "logger",
+              appName: "down-spiral",
+              priority: "started",
+            },
           ],
         });
       }
@@ -50,33 +54,20 @@ function App() {
   }, [payload]);
 
   return (
-    <div>
-      <Table striped bordered hover variant="dark">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Message</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {payload?.list.map((payload: IPayload) => (
-            <React.Fragment key={payload.id}>
-              <tr>
-                <td>{payload.id}</td>
-                <td>{payload.msg}</td>
-                <td>{payload.dt.toString()}</td>
-              </tr>
-            </React.Fragment>
-          ))}
-        </tbody>
-      </Table>
-    </div>
+    <React.Fragment>
+      <Switch>
+        <Route exact path="/" component={TableLog} />
+      </Switch>
+    </React.Fragment>
   );
 }
 
 export default App;
-
+{
+  /* <Route exact path="/">
+          <Redirect to="/Home" />
+        </Route> */
+}
 // const [socket, setSocket] = useState<SocketIOClient.Socket>();
 
 // // establish socket connection

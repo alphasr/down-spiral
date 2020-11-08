@@ -20,7 +20,7 @@ ioServer.on("connection", (client) => {
   });
   client.on("test", (data) => {
     dataJson = JSON.parse(data);
-    // console.log("client is subscribing to timer with interval ", dataJson.msg);
+    console.log("client is subscribing with :::", JSON.stringify(dataJson));
 
     client.in("myRoom").emit("temp", JSON.stringify(dataJson));
   });
