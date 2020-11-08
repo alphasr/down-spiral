@@ -1,4 +1,4 @@
-import React, { Fragment, Dispatch, useEffect, useState } from "react";
+import React, { Fragment, Dispatch, useEffect } from "react";
 import { Table } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -6,40 +6,24 @@ import {
   setTableLog,
 } from "../store/actions/tableLogActions";
 import { AppState } from "../store/reducers";
-import {
-  initialTableLogsState,
-  ITableData,
-  ITableLogsState,
-} from "../store/reducers/tableLogsReducer";
+import { ITableData } from "../store/reducers/tableLogsReducer";
 
-import { v4 as uuidv4 } from "uuid";
 import { spiralLogs } from "../api";
 
 const TableLog = () => {
   const { header, data } = useSelector((state: AppState) => state.tableLog);
   const tableLogDispatch = useDispatch<Dispatch<ITableLogActions>>();
 
-  //   const handleModalClose = () => {
-  //     tableLogDispatch(setTableLog());
-  //   };
-
-  const handleSetPayload = () => {
-    //console.log("LOL");
-    const uid = uuidv4();
-    const newPayload: ITableData = {
-      id: uid,
-      timestamp: new Date(),
-      hostName: "logger",
-      appName: "down-spiral",
-      priority: "started",
-    };
-    // const parsedPayload: ITableData = JSON.parse(payloadNew);
-    //  console.log("Inside set payload :", payloadNew.msg);
-    return tableLogDispatch(setTableLog(newPayload));
-  };
   useEffect(() => {
-    handleSetPayload();
-  }, []);
+    const handleSetPayload = (payload: string) => {
+      const parsedPayload: ITableData = JSON.parse(payload);
+
+      const newPayload: ITableData = parsedPayload;
+
+      return tableLogDispatch(setTableLog(newPayload));
+    };
+    spiralLogs((payload: string) => handleSetPayload(payload));
+  }, [tableLogDispatch]);
 
   return (
     <Fragment>
