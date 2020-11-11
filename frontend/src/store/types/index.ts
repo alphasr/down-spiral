@@ -1,3 +1,6 @@
 // ITableLogs
-export const SET_TABLE_LOG = "SET_TABLE_LOG";
-export type SET_TABLE_LOG = typeof SET_TABLE_LOG;
+export const SET_TABLE_DATA_LOG = "SET_TABLE_DATA_LOG";
+export type SET_TABLE_DATA_LOG = typeof SET_TABLE_DATA_LOG;
+
+export const SET_TABLE_HEADER_LOG = "SET_TABLE_HEADER_LOG";
+export type SET_TABLE_HEADER_LOG = typeof SET_TABLE_HEADER_LOG;

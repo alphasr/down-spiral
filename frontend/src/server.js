@@ -18,11 +18,18 @@ ioServer.on("connection", (client) => {
   client.on("room", function (room) {
     client.join(room);
   });
-  client.on("test", (data) => {
+  client.on("tableHeader", (data) => {
     dataJson = JSON.parse(data);
     console.log("client is subscribing with :::", JSON.stringify(dataJson));
 
-    client.in("myRoom").emit("temp", JSON.stringify(dataJson));
+    client.in("myRoom").emit("setTableHeader", JSON.stringify(dataJson));
+  });
+
+  client.on("tableData", (data) => {
+    dataJson = JSON.parse(data);
+    console.log("client is subscribing with :::", JSON.stringify(dataJson));
+
+    client.in("myRoom").emit("setTableData", JSON.stringify(dataJson));
   });
 });
 

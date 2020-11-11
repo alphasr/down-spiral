@@ -1,11 +1,6 @@
 import openSocket from "socket.io-client";
 const socket = openSocket("http://localhost:8000");
 
-interface IPayload {
-  msg: string;
-  dt: Date;
-}
-
 function spiralLogs(cb: Function) {
   socket.on("connect", function () {
     try {
@@ -15,7 +10,8 @@ function spiralLogs(cb: Function) {
       return spiralLogs(cb);
     }
   });
-  socket.on("temp", (data: IPayload) => cb(data));
+  socket.on("setTableHeader", (data: any) => cb(data));
+  socket.on("setTableData", (data: any) => cb(data));
 }
 
 //   socket.on("test", (timestamp) => cb(null, timestamp));

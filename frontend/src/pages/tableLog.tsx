@@ -3,6 +3,7 @@ import { Table } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import {
   ITableLogActions,
+  setTableHeaderLog,
   setTableLog,
 } from "../store/actions/tableLogActions";
 import { AppState } from "../store/reducers";
@@ -16,11 +17,13 @@ const TableLog = () => {
 
   useEffect(() => {
     const handleSetPayload = (payload: string) => {
-      const parsedPayload: ITableData = JSON.parse(payload);
+      const parsedPayload: any = JSON.parse(payload);
 
-      const newPayload: ITableData = parsedPayload;
+      if (typeof parsedPayload[0] === "string") {
+        return tableLogDispatch(setTableHeaderLog(parsedPayload));
+      }
 
-      return tableLogDispatch(setTableLog(newPayload));
+      return tableLogDispatch(setTableLog(parsedPayload));
     };
     spiralLogs((payload: string) => handleSetPayload(payload));
   }, [tableLogDispatch]);
@@ -31,11 +34,14 @@ const TableLog = () => {
         <Table striped bordered hover variant="dark">
           <thead>
             <tr>
-              {header?.map((title: string) => (
-                <React.Fragment key={title}>
-                  <th>{title}</th>
-                </React.Fragment>
-              ))}
+              {header?.map(
+                (title: string) =>
+                  title && (
+                    <React.Fragment key={title}>
+                      <th>{title}</th>
+                    </React.Fragment>
+                  )
+              )}
             </tr>
           </thead>
           <tbody>
