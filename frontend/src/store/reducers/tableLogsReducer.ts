@@ -47,9 +47,11 @@ export const tableLogReducer = (
       return state;
     }
     case types.SET_TABLE_HEADER_LOG: {
+      let tempHeader: string[] = state.header!;
+      tempHeader.push(...tableHeader);
       console.log("payload in reducer = ", JSON.stringify(payload));
       if (tableHeader) {
-        return { ...state, header: tableHeader };
+        return { ...state, header: tempHeader };
       }
       return state;
     }
