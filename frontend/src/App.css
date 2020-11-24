@@ -27,7 +27,21 @@
 .App-link {
   color: #61dafb;
 }
+.center {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+}
 
+.badge-new {
+  font-size: 1.25em;
+  font-weight: 100;
+}
+
+.font-thin {
+  font-weight: 400 !important;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
