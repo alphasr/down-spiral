@@ -1,11 +1,17 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { ButtonGroup, Button, Badge, Table } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { AppState } from '../../store/reducers';
+import React, { Dispatch, Fragment, useEffect, useState } from "react";
+import { Table } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { spiralLogs } from "../../api";
+import {
+  ITableLogActions,
+  setTableHeaderLog,
+  setTableLog,
+} from "../../store/actions/tableLogActions";
+import { AppState } from "../../store/reducers";
 import {
   ITableData,
   ITableDataSingleton,
-} from '../../store/reducers/tableLogsReducer';
+} from "../../store/reducers/tableLogsReducer";
 
 interface IProps {
   sessionId: string;
@@ -13,16 +19,33 @@ interface IProps {
 
 const TableSessions: React.FC<IProps> = ({ sessionId }) => {
   const { sessionData } = useSelector((state: AppState) => state.tableLog);
+  const tableLogDispatch = useDispatch<Dispatch<ITableLogActions>>();
 
   const [currentSession, setCurrentSession] = useState<ITableData>();
-  const [currentSessionData, setCurrentSessionData] = useState<any[]>();
   const sessionIndex = (session: ITableData) =>
     session.sessionId === sessionId ? true : false;
+
   useEffect(() => {
     const sessionIndexNew = sessionData.findIndex(sessionIndex);
     setCurrentSession(sessionData[sessionIndexNew]);
+
     if (currentSession) getData(currentSession.data);
+
+    const handleSetPayload = (payload: string) => {
+      // const parsedPayload: ITableData = JSON.parse(payload);
+      const parsedPayload: any = JSON.parse(payload);
+
+      // const newPayload: ITableData = parsedPayload;
+      if (typeof parsedPayload[0] === "string") {
+        return tableLogDispatch(setTableHeaderLog(parsedPayload));
+      }
+
+      // return tableLogDispatch(setTableLog(newPayload));
+      return tableLogDispatch(setTableLog(parsedPayload));
+    };
+    spiralLogs((payload: string) => handleSetPayload(payload));
   }, [sessionId]);
+
   const getData = (payload: any) => {
     let data: any[] = [];
     for (const key in payload) {

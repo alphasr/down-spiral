@@ -25,6 +25,13 @@ ioServer.on("connection", (client) => {
     client.in("myRoom").emit("setTableHeader", JSON.stringify(dataJson));
   });
 
+  client.on("graphData", (data) => {
+    dataJson = JSON.parse(data);
+    console.log("client is subscribing with :::", JSON.stringify(dataJson));
+
+    client.in("myRoom").emit("setGraph", JSON.stringify(dataJson));
+  });
+
   client.on("tableData", (data) => {
     dataJson = JSON.parse(data);
     console.log("client is subscribing with :::", JSON.stringify(dataJson));

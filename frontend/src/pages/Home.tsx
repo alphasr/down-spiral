@@ -1,21 +1,20 @@
-import React, { Fragment } from 'react';
-import { ButtonGroup, Button } from 'react-bootstrap';
+import React, { Fragment } from "react";
+import { ButtonGroup, Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import Graph from "./Graph";
+import TableLog from "./TableLogPage";
 
 const Home = () => {
+  const history = useHistory();
+  const handleTableClicked = (e: any) => {
+    e.preventDefault();
+    history.push("/table-logs");
+  };
+
   return (
     <Fragment>
-      <div className="center p-4">
-        <div
-          className="p-4 card shadow col-md-6"
-          style={{ backgroundColor: '#c6c6c6' }}
-        >
-          <ButtonGroup className="mb-2">
-            <Button>Table</Button>
-            <Button>Graph</Button>
-            <Button>NextImplementation</Button>
-          </ButtonGroup>
-        </div>
-      </div>
+      <Graph />
+      <TableLog />
     </Fragment>
   );
 };

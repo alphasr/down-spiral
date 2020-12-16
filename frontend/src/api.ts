@@ -12,6 +12,7 @@ function spiralLogs(cb: Function) {
   });
   socket.on("setTableHeader", (data: any) => cb(data));
   socket.on("setTableData", (data: any) => cb(data));
+  socket.on("setGraph", (data: any) => cb(data));
 }
 
 //   socket.on("test", (timestamp) => cb(null, timestamp));

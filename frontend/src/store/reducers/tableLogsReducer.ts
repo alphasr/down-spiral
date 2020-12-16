@@ -1,4 +1,4 @@
-import * as types from '../types';
+import * as types from "../types";
 
 // export interface ITableLogsState {
 //   header?: string[];
@@ -35,56 +35,56 @@ export interface ITableDataSingleton {
 export const initialTableLogsState: ITableLogsState = {
   sessionData: [
     {
-      sessionId: '12312311sadf',
-      header: ['id', 'timestamp', 'hostname', 'appName', 'priority'],
+      sessionId: "12312311sadf",
+      header: ["id", "timestamp", "hostname", "appName", "priority"],
       data: [
         {
-          id: '123123hjasdf', //uuidv4(),
+          id: "123123hjasdf", //uuidv4(),
           timestamp: new Date(),
-          hostName: 'sdf',
-          appName: 'aa',
-          priority: 'asdf',
+          hostName: "sdf",
+          appName: "aa",
+          priority: "asdf",
         },
         {
-          id: '123123hjasdasdf', //uuidv4(),
+          id: "123123hjasdasdf", //uuidv4(),
           timestamp: new Date(),
-          hostName: 'sdf',
-          appName: 'aa',
-          priority: 'asdf',
+          hostName: "sdf",
+          appName: "aa",
+          priority: "asdf",
         },
       ],
     },
     {
-      sessionId: '12312311sadfasdf',
-      header: ['id', 'timestamp', 'hostname', 'appName', 'priority'],
+      sessionId: "12312311sadfasdf",
+      header: ["id", "timestamp", "hostname", "appName", "priority"],
       data: [
         {
-          id: '123123hjasdf', //uuidv4(),
+          id: "123123hjasdf", //uuidv4(),
           timestamp: new Date(),
-          hostName: 'sdf',
-          appName: 'aa',
-          priority: 'asdf',
+          hostName: "sdf",
+          appName: "aa",
+          priority: "asdf",
         },
         {
-          id: '123123hjasdasdf', //uuidv4(),
+          id: "123123hjasdasdf", //uuidv4(),
           timestamp: new Date(),
-          hostName: 'sdf',
-          appName: 'aa',
-          priority: 'asdf',
+          hostName: "sdf",
+          appName: "aa",
+          priority: "asdf",
         },
         {
-          id: '123123hjassadf', //uuidv4(),
+          id: "123123hjassadf", //uuidv4(),
           timestamp: new Date(),
-          hostName: 'sdf',
-          appName: 'aa',
-          priority: 'asdf',
+          hostName: "sdf",
+          appName: "aa",
+          priority: "asdf",
         },
         {
-          id: '123123hjasdasdasdff', //uuidv4(),
+          id: "123123hjasdasdasdff", //uuidv4(),
           timestamp: new Date(),
-          hostName: 'sdf',
-          appName: 'aa',
-          priority: 'asdf',
+          hostName: "sdf",
+          appName: "aa",
+          priority: "asdf",
         },
       ],
     },
@@ -103,7 +103,7 @@ export const tableLogReducer = (
   // const { sessionId, data, header } = tableData;
   switch (type) {
     case types.SET_TABLE_DATA_LOG: {
-      console.log('payload in reducer = ', JSON.stringify(payload));
+      console.log("payload in reducer = ", JSON.stringify(payload));
       if (
         state.sessionData.find(
           (session) => session.sessionId === payload.sessionId
@@ -115,6 +115,8 @@ export const tableLogReducer = (
         const dataIndex = state.sessionData.findIndex(sessionIndex);
         payload?.data.forEach((datum) => tempData[dataIndex].data.push(datum));
         tempData[dataIndex].header = payload.header;
+        if (state.sessionData[dataIndex].data === tempData[dataIndex].data)
+          return state;
         return { ...state, sessionData: tempData };
       }
       return { ...state, sessionData: [...state.sessionData, tableData] };

@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from "react";
 import { ButtonGroup, Button, Badge } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { AppState } from "../../store/reducers";
-import TableSessionData from "./TableSessionData";
+import GraphSession from "../components/graph/GraphSession";
+import { AppState } from "../store/reducers";
 
-const TableSessions = () => {
-  const { sessionData } = useSelector((state: AppState) => state.tableLog);
+const Graph = () => {
+  const { sessionData } = useSelector((state: AppState) => state.graphLog);
   const [currentSession, setCurrentSession] = useState("");
 
   const handleSetCurrentSesssion = (sessionId: string) => {
@@ -36,11 +36,12 @@ const TableSessions = () => {
               </span>
             </Button>
           ))}
-        </div>
-        <TableSessionData sessionId={currentSession} />
+        </div>{" "}
+        <GraphSession sessionId={currentSession} />
+        {/* <TableSessionData sessionId={currentSession} /> */}
       </div>
     </Fragment>
   );
 };
 
-export default TableSessions;
+export default Graph;
