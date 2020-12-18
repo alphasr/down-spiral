@@ -94,32 +94,48 @@ export const initialTableLogsState: ITableLogsState = {
 export const tableLogReducer = (
   state: ITableLogsState = initialTableLogsState,
   action: {
-    type: types.SET_TABLE_DATA_LOG | types.SET_TABLE_HEADER_LOG;
-    payload: ITableData;
+    type:
+      | types.SET_TABLE_DATA_LOG
+      | types.SET_TABLE_HEADER_LOG
+      | types.DELETE_TABLE_SESSION;
+    payload: ITableData | string;
   }
 ): ITableLogsState => {
   const { type, payload } = action;
+
+  const tablePayload = payload as ITableData;
+  const deleteSessionPayload = payload as string;
+
   let tableData: ITableData = payload as ITableData;
   // const { sessionId, data, header } = tableData;
   switch (type) {
     case types.SET_TABLE_DATA_LOG: {
-      console.log("payload in reducer = ", JSON.stringify(payload));
+      console.log("payload in reducer = ", JSON.stringify(tablePayload));
       if (
         state.sessionData.find(
-          (session) => session.sessionId === payload.sessionId
+          (session) => session.sessionId === tablePayload.sessionId
         )
       ) {
         const sessionIndex = (session: ITableData) =>
-          session.sessionId === payload?.sessionId;
+          session.sessionId === tablePayload?.sessionId;
         const tempData = state.sessionData;
         const dataIndex = state.sessionData.findIndex(sessionIndex);
-        payload?.data.forEach((datum) => tempData[dataIndex].data.push(datum));
-        tempData[dataIndex].header = payload.header;
+        tablePayload?.data.forEach((datum) =>
+          tempData[dataIndex].data.push(datum)
+        );
+        tempData[dataIndex].header = tablePayload.header;
         if (state.sessionData[dataIndex].data === tempData[dataIndex].data)
           return state;
         return { ...state, sessionData: tempData };
       }
       return { ...state, sessionData: [...state.sessionData, tableData] };
+    }
+    case types.DELETE_TABLE_SESSION: {
+      const newState = state.sessionData.filter(
+        (session) => session.sessionId !== deleteSessionPayload
+      );
+
+      return { ...state, sessionData: newState };
     }
     default:
       return state;

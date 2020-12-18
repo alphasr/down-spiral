@@ -4,9 +4,12 @@ import { ITableData } from "../reducers/tableLogsReducer";
 
 //ITable Actions
 export interface ITableLogActions extends Action {
-  type: types.SET_TABLE_DATA_LOG | types.SET_TABLE_HEADER_LOG;
+  type:
+    | types.SET_TABLE_DATA_LOG
+    | types.SET_TABLE_HEADER_LOG
+    | types.DELETE_TABLE_SESSION;
 
-  payload: ITableData[] | string[];
+  payload: ITableData[] | string[] | string;
 }
 
 //ITable Action : Setting logs, caught in saga
@@ -22,4 +25,12 @@ const setTableHeaderLog: ActionCreator<ITableLogActions> = (
   type: types.SET_TABLE_HEADER_LOG,
   payload: payload,
 });
-export { setTableLog, setTableHeaderLog };
+
+const deleteTableSession: ActionCreator<ITableLogActions> = (
+  payload: string
+) => ({
+  type: types.DELETE_TABLE_SESSION,
+  payload: payload,
+});
+
+export { setTableLog, setTableHeaderLog, deleteTableSession };

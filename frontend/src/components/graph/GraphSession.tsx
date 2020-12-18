@@ -1,7 +1,7 @@
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { useSelector, useDispatch } from "react-redux";
-import { spiralLogs } from "../../api";
+import { spiralGraphs, spiralLogs } from "../../api";
 import {
   IGraphLogActions,
   setGraphLog,
@@ -15,6 +15,11 @@ interface IProps {
 
 const GraphSession: React.FC<IProps> = ({ sessionId }) => {
   const [currentSession, setCurrentSession] = useState<IGraphData>();
+
+  useEffect(() => {
+    if (sessionId === undefined || sessionId === null)
+      setCurrentSession(undefined);
+  }, [sessionId]);
 
   let barState = {
     type: "bar",
@@ -71,26 +76,6 @@ const GraphSession: React.FC<IProps> = ({ sessionId }) => {
     session.sessionId === sessionId ? true : false;
 
   useEffect(() => {
-    const handleSetPayload = (payload: string) => {
-      const parsedPayload: any = JSON.parse(payload);
-      if (
-        parsedPayload.labels &&
-        parsedPayload.datasets &&
-        parsedPayload.sessionId
-      ) {
-        const data: IGraphData = {
-          labels: parsedPayload.labels,
-          datasets: parsedPayload.datasets,
-          sessionId: parsedPayload.sessionId,
-        };
-
-        return graphLogDispatch(setGraphLog(data));
-      }
-
-      return null;
-    };
-    spiralLogs((payload: string) => handleSetPayload(payload)); //working
-
     const sessionIndexNew = sessionData.findIndex(sessionIndex);
     console.log("log is = ", JSON.stringify(sessionData[sessionIndexNew])); //working
 

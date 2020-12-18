@@ -4,9 +4,9 @@ import { IGraphData } from "../reducers/graphReducer";
 
 //ITable Actions
 export interface IGraphLogActions extends Action {
-  type: types.SET_GRAPH_LOGS;
+  type: types.SET_GRAPH_LOGS | types.DELETE_GRAPH_SESSION;
 
-  payload: IGraphData[];
+  payload: IGraphData[] | string;
 }
 
 //ITable Action : Setting logs, caught in saga
@@ -16,4 +16,12 @@ const setGraphLog: ActionCreator<IGraphLogActions> = (
   type: types.SET_GRAPH_LOGS,
   payload: payload,
 });
-export { setGraphLog };
+
+//ITable Action : Setting logs, caught in saga
+const deleteGraphSession: ActionCreator<IGraphLogActions> = (
+  payload: string
+) => ({
+  type: types.DELETE_GRAPH_SESSION,
+  payload: payload,
+});
+export { setGraphLog, deleteGraphSession };

@@ -1,30 +1,27 @@
 import React, { Fragment, Dispatch, useEffect } from "react";
-import { Table } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   ITableLogActions,
   setTableHeaderLog,
   setTableLog,
 } from "../store/actions/tableLogActions";
-import { AppState } from "../store/reducers";
 import { ITableData } from "../store/reducers/tableLogsReducer";
 
 import { spiralLogs } from "../api";
-import Menu from "../components/table/TableMenu";
 import TableSessions from "../components/table/TableSessions";
 
 const TableLog = () => {
   //   const { header, data } = useSelector((state: AppState) => state.tableLog);
   const tableLogDispatch = useDispatch<Dispatch<ITableLogActions>>();
 
-  const getData = (payload: any) => {
-    let data: any[] = [];
-    for (const key in payload) {
-      data.push(<td>{payload[key]}</td>);
-    }
+  // const getData = (payload: any) => {
+  //   let data: any[] = [];
+  //   for (const key in payload) {
+  //     data.push(<td>{payload[key]}</td>);
+  //   }
 
-    return data.map((datum) => datum);
-  };
+  //   return data.map((datum) => datum);
+  // };
 
   useEffect(() => {
     const handleSetPayload = (payload: string) => {

@@ -45,33 +45,46 @@ export const initialGraphLogsState: IGraphLogsState = {
 export const graphLogReducer = (
   state: IGraphLogsState = initialGraphLogsState,
   action: {
-    type: types.SET_GRAPH_LOGS;
-    payload: IGraphData;
+    type: types.SET_GRAPH_LOGS | types.DELETE_GRAPH_SESSION;
+    payload: IGraphData | string;
   }
 ): IGraphLogsState => {
   const { type, payload } = action;
+
+  const graphDataPayload = payload as IGraphData;
+  const deleteSessionId = payload as string;
 
   switch (type) {
     case types.SET_GRAPH_LOGS: {
       console.log("payload in reducer = ", JSON.stringify(payload));
       if (
         state.sessionData.find(
-          (session) => session.sessionId === payload?.sessionId
+          (session) => session.sessionId === graphDataPayload?.sessionId
         )
       ) {
         const sessionIndex = (session: IGraphData) =>
-          session.sessionId === payload?.sessionId;
+          session.sessionId === graphDataPayload?.sessionId;
         const tempData = state.sessionData;
         const dataIndex = state.sessionData.findIndex(sessionIndex);
-        tempData[dataIndex].datasets = payload?.datasets;
-        tempData[dataIndex].labels = payload?.labels;
+        tempData[dataIndex].datasets = graphDataPayload?.datasets;
+        tempData[dataIndex].labels = graphDataPayload?.labels;
         if (
           state.sessionData[dataIndex].datasets === tempData[dataIndex].datasets
         )
           return state;
         return { ...state, sessionData: tempData };
       }
-      return { ...state, sessionData: [...state.sessionData, payload] };
+      return {
+        ...state,
+        sessionData: [...state.sessionData, graphDataPayload],
+      };
+    }
+    case types.DELETE_GRAPH_SESSION: {
+      const newState = state.sessionData.filter(
+        (session) => session.sessionId !== deleteSessionId
+      );
+
+      return { ...state, sessionData: newState };
     }
     default:
       return state;
