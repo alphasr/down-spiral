@@ -1,0 +1,5 @@
+1.Running the node js server and frontend
+	a. Clone the repo, master branch from https://github.com/alphasr/down-spiral/
+	b. Open the current directory in the terminal, then go to frontend folder,and run "npm install". This will install all dependencies. 
+	c. Running the server - dir:'/frontend/src/', run "noder server.js" . On success "listening on port  8000"  message is displayed.
+	d. Running the frontend - dir:'/frontend/', run "npm run start".  On success "localhost:3000" opens
