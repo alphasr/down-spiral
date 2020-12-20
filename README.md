@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-Checkout the [Guide] (https://github.com/alphasr/down-spiral/blob/master/guide/guide.md), for instructions.
+Checkout the [Guide](https://github.com/alphasr/down-spiral/blob/master/guide/guide.md), for instructions.
 
 ## down-spiral
 
