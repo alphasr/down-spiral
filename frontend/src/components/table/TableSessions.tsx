@@ -31,7 +31,7 @@ const TableSessions = () => {
         <div>
           <h4>Available Table Log Sessions</h4>
         </div>
-        <div className="row">
+        <div className="row ml-2">
           {sessionData.map((session) => (
             <React.Fragment>
               <div

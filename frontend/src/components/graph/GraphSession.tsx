@@ -1,7 +1,15 @@
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
-import { Bar } from "react-chartjs-2";
+import { Button } from "react-bootstrap";
+import {
+  Bar,
+  Bubble,
+  Doughnut,
+  Line,
+  Polar,
+  Radar,
+  Scatter,
+} from "react-chartjs-2";
 import { useSelector, useDispatch } from "react-redux";
-import { spiralGraphs, spiralLogs } from "../../api";
 import {
   IGraphLogActions,
   setGraphLog,
@@ -22,7 +30,7 @@ const GraphSession: React.FC<IProps> = ({ sessionId }) => {
   }, [sessionId]);
 
   let barState = {
-    type: "bar",
+    type: currentSession?.type ? currentSession.type : "bar",
     data: {
       labels: currentSession?.labels,
       datasets: [
@@ -35,6 +43,9 @@ const GraphSession: React.FC<IProps> = ({ sessionId }) => {
       ],
     },
     options: {
+      plugins: {
+        legend: { position: "bottom" },
+      },
       responsive: true,
       scales: {
         xAxes: [
@@ -44,7 +55,7 @@ const GraphSession: React.FC<IProps> = ({ sessionId }) => {
               minRotation: 80,
             },
             gridLines: {
-              offsetGridLines: true, // à rajouter
+              offsetGridLines: true, //
             },
           },
           {
@@ -54,7 +65,7 @@ const GraphSession: React.FC<IProps> = ({ sessionId }) => {
               minRotation: 80,
             },
             gridLines: {
-              offsetGridLines: true, // et matcher pareil ici
+              offsetGridLines: true, //
             },
           },
         ],
@@ -87,7 +98,39 @@ const GraphSession: React.FC<IProps> = ({ sessionId }) => {
 
   return (
     <Fragment>
-      <Bar data={barState.data} options={barState.options} />;
+      <div className="row">
+        {barState.type === "bar" && (
+          <div className="col-md-6">
+            <Bar data={barState.data} options={barState.options} />
+          </div>
+        )}
+        {barState.type === "bar" && (
+          <div className="col-md-6">
+            <Bar data={barState.data} options={barState.options} />
+          </div>
+        )}
+      </div>
+      {barState.type === "bar" && (
+        <Bar data={barState.data} options={barState.options} />
+      )}
+      {barState.type === "line" && (
+        <Line data={barState.data} options={barState.options} />
+      )}
+      {barState.type === "radar" && (
+        <Radar data={barState.data} options={barState.options} />
+      )}
+      {barState.type === "doughnut" && (
+        <Doughnut data={barState.data} options={barState.options} />
+      )}
+      {barState.type === "polarArea" && (
+        <Polar data={barState.data} options={barState.options} />
+      )}
+      {barState.type === "bubble" && (
+        <Bubble data={barState.data} options={barState.options} />
+      )}
+      {barState.type === "scatter" && (
+        <Scatter data={barState.data} options={barState.options} />
+      )}
     </Fragment>
   );
 };

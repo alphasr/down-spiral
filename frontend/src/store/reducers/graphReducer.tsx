@@ -6,6 +6,7 @@ export interface IGraphLogsState {
 }
 
 export interface IGraphData {
+  type?: string;
   labels: string[];
   sessionId: string;
   datasets: IGraphDataSingleton;
@@ -19,6 +20,7 @@ export interface IGraphDataSingleton {
 export const initialGraphLogsState: IGraphLogsState = {
   sessionData: [
     {
+      type: "bar",
       labels: [
         "2015-01",
         "2015-02",

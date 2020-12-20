@@ -54,3 +54,17 @@ table {
     transform: rotate(360deg);
   }
 }
+
+.new .btn,
+.btn-outline-primary {
+  color: white !important;
+}
+
+.active {
+  color: white !important;
+  background-color: lightcoral !important;
+  border-color: lightcoral !important;
+}
+.scroll-y-allow {
+  overflow-x: scroll;
+}
