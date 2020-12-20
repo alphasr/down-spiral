@@ -43,9 +43,6 @@ const GraphSession: React.FC<IProps> = ({ sessionId }) => {
       ],
     },
     options: {
-      plugins: {
-        legend: { position: "bottom" },
-      },
       responsive: true,
       scales: {
         xAxes: [
@@ -98,7 +95,7 @@ const GraphSession: React.FC<IProps> = ({ sessionId }) => {
 
   return (
     <Fragment>
-      <div className="row">
+      {/* <div className="row">
         {barState.type === "bar" && (
           <div className="col-md-6">
             <Bar data={barState.data} options={barState.options} />
@@ -109,7 +106,7 @@ const GraphSession: React.FC<IProps> = ({ sessionId }) => {
             <Bar data={barState.data} options={barState.options} />
           </div>
         )}
-      </div>
+      </div> */}
       {barState.type === "bar" && (
         <Bar data={barState.data} options={barState.options} />
       )}
