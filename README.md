@@ -2,17 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-In the project directory, you can run:
-### How to run frontend/server :
-### `npm run start`
-
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
+Checkout the [Guide] (https://github.com/alphasr/down-spiral/blob/master/guide/guide.md), for instructions.
 
 ## down-spiral
 
@@ -22,6 +12,6 @@ Logs are useful to keep track of system usage, application improvement, and to d
 
 DS visualizes data from running applications. It renders logs in a web browser, which means better visualization of data for analysis and debugging.DS focuses on a better user-experience for debugging problems and logging.
 
-DS has a typescript server with a react-native application to render logs in the browser, and an API communicates with the server. API serializes the data and sends it to the server via socket. The user can import the library and can use pre-defined formatting options or add to it. 
+DS has a typescript server with a react-native application to render logs in the browser, and an API communicates with the server. API serializes the data and sends it to the server via socket. The user can import the library and can use pre-defined formatting options or add to it.
 
 ### `Still in development`
