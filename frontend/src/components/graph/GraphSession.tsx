@@ -1,5 +1,4 @@
 import React, { Dispatch, Fragment, useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
 import {
   Bar,
   Bubble,
@@ -10,12 +9,10 @@ import {
   Scatter,
 } from "react-chartjs-2";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  IGraphLogActions,
-  setGraphLog,
-} from "../../store/actions/graphLogActions";
+import { IGraphLogActions } from "../../store/actions/graphLogActions";
 import { AppState } from "../../store/reducers";
 import { IGraphData } from "../../store/reducers/graphReducer";
+var randomColor = require("randomcolor");
 
 interface IProps {
   sessionId: string;
@@ -37,7 +34,9 @@ const GraphSession: React.FC<IProps> = ({ sessionId }) => {
         {
           label: currentSession?.datasets.label,
           data: currentSession?.datasets.data,
-          backgroundColor: "rgba(255,0,0,0.2)",
+          backgroundColor: randomColor({
+            count: currentSession?.labels ? currentSession?.labels.length : 1,
+          }),
           borderWidth: 1,
         },
       ],

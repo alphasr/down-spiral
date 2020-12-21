@@ -21,6 +21,7 @@
     "echarts": "^5.0.0",
     "echarts-for-react": "^2.0.16",
     "express": "^4.17.1",
+    "randomcolor": "^0.6.2",
     "react": "^16.13.1",
     "react-bootstrap": "^1.4.0",
     "react-chartjs-2": "^2.11.1",
