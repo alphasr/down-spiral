@@ -64,16 +64,47 @@ export const graphLogReducer = (
           (session) => session.sessionId === graphDataPayload?.sessionId
         )
       ) {
+        console.log("found session id ");
         const sessionIndex = (session: IGraphData) =>
           session.sessionId === graphDataPayload?.sessionId;
         const tempData = state.sessionData;
         const dataIndex = state.sessionData.findIndex(sessionIndex);
-        tempData[dataIndex].datasets = graphDataPayload?.datasets;
-        tempData[dataIndex].labels = graphDataPayload?.labels;
+
+        if (
+          tempData[dataIndex].labels !== graphDataPayload?.labels &&
+          tempData[dataIndex].datasets.data !== graphDataPayload.datasets.data
+        ) {
+          console.log("labels and data is changed");
+
+          tempData[dataIndex].labels = tempData[dataIndex].labels.concat(
+            graphDataPayload?.labels
+          );
+          tempData[dataIndex].datasets.label = graphDataPayload?.datasets.label;
+          tempData[dataIndex].datasets.data = tempData[
+            dataIndex
+          ].datasets.data?.concat(graphDataPayload?.datasets.data);
+        } else if (tempData[dataIndex].labels !== graphDataPayload?.labels) {
+          console.log("Labels is changed");
+
+          tempData[dataIndex].labels = tempData[dataIndex].labels.concat(
+            graphDataPayload?.labels
+          );
+        } else if (
+          tempData[dataIndex].datasets.data !== graphDataPayload.datasets.data
+        ) {
+          console.log("Data and data is changed");
+
+          tempData[dataIndex].datasets.label = graphDataPayload?.datasets.label;
+          tempData[dataIndex].datasets.data = tempData[
+            dataIndex
+          ].datasets.data?.concat(graphDataPayload?.datasets.data);
+        }
+
         if (
           state.sessionData[dataIndex].datasets === tempData[dataIndex].datasets
         )
           return state;
+
         return { ...state, sessionData: tempData };
       }
       return {

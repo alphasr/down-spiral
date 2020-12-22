@@ -29,5 +29,3 @@ DS has a typescript server with a react-native application to render logs in the
 - Running the <strong>Server</strong> - `cd dir:/down-spiral/frontend/src/`, run `node server.js` .
 
   On success `listening on port 8000` message is displayed.
-
-### `Still in development`
