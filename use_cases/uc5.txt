@@ -1,0 +1,106 @@
+UC5. Logging to multiple sinks
+
+  1. User writes a long running program, mocked up by this pseudocode
+
+     for i in 0.. {
+        start := current time
+        result := run long running task
+        duration := concat(current time - start, "s")
+     }
+
+  2. User imports package or library in language appropriate manner 
+ 
+     import logging library
+
+     for i in 0.. {
+        start := current time
+        result := run long running task
+        duration := concat(current time - start, "s")
+     }
+
+   3. User configures loggers to display data as a table and as a bar plot:
+ 
+     import logging library
+
+     configure_logger("localhost", 3000, "results", TABLE)
+     configure_logger("localhost", 3000, "elapsed_time", GRAPH, BAR_PLOT, "n", "seconds")
+
+     for i in 0.. {
+        start := current time
+        result := run long running task
+        duration := concat(current time - start, "s")
+     }
+
+   4. User logs data from running program to two loggers:
+
+     import logging library
+
+     configure_logger("localhost", 3000, "results", TABLE)
+     configure_logger("localhost", 3000, "elapsed_time", GRAPH, BAR_PLOT)
+
+     for i in 0.. {
+        start := current time
+        result := run long running task
+        duration := concat(current time - start, "s")
+        log("results", ["i": i, "result": result])
+        log("elapsed_time", ["i": i, "elapsed_time": duration])
+     }
+
+   5. User turns on browser pointed at the logging server at address indicating a concrete logger "localhost:3000/log=results". 
+
+   6. User turns on another browser pointed at the logging server at address indicating a concrete logger "localhost:3000/log=elapsed_time". 
+
+   7. User starts program.
+
+   8. Program runs and sends configuration for "results" and "elapsed_time" to server at localhost:3000 as JSON.
+
+   9. Server receives configuration information, performs configuration.
+
+  10. Program continues running and sends data to "results" and "elapsed_time".
+
+  11. Server receives data, performs visualization.
+
+  12. The browser pointed at "results" updates it's table. Example after 4 iterations:
+
+        +---+-------------+
+        | n | result      |
+        +---+-------------+
+        | 0 | asia        |
+        +---+-------------+
+        | 1 | basia       |
+        +---+-------------+
+        | 2 | casia       |
+        +---+-------------+
+        | 3 | dasia       |
+        +---+-------------+
+
+  13. Program continues running and sends data to "elapsed_time". 
+
+  14. Server receives data, performs visualization.
+
+  15: The browser pointed at "elapsed_time" updates it's graph. Example after 4 iterations:
+
+    seconds ^
+            |
+        180 +         ███
+            |         ███
+        160 +         ███
+            |         ███
+        140 +         ███
+            |         ███
+        120 +         ███
+            |         ███
+        100 +         ███         
+            |         ███
+         80 +         ███
+            |         ███
+         60 +         ███
+            |         ███
+         40 +     ▉▉▉ ███
+            |     ▉▉▉ ███
+         20 +     ▉▉▉ ███ 
+            | ▂▂▂ ▉▉▉ ███ ▃▃▃ 
+            +--+---+---+---+---+--->
+               0   1   2   3   4   n
+  
+  16. Proceed to 10

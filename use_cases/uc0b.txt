@@ -1,0 +1,63 @@
+UC0b. Turning it on later
+
+  1. User writes a long running program, mocked up by this pseudocode
+
+     for i in 0..3 {
+        result := run long running task
+     }
+
+  2. User imports package or library in language appropriate manner 
+ 
+     import logging library
+
+     for i in 0..3 {
+        result := run long running task
+     }
+
+   3. User configures loggers 
+ 
+     import logging library
+
+     configure_logger("localhost", 3000, "results", SIMPLE_PRINTER)
+
+     for i in 0..3 {
+        result := run long running task
+     }
+
+   4. User logs data from running program
+
+     import logging library
+
+     configure_logger("localhost", 3000, "results", SIMPLE_PRINTER)
+
+     for i in 0..3 {
+        result := run long running task
+
+        result_label := concat("result ", i)
+        result_line = concat(result_label, ": ", result)
+        log("results", result_line)
+     }
+
+   5. User starts program.
+
+   6. Program runs and sends configuration for "results" to server at localhost:3000 as JSON.
+
+   7. Server receives configuration information, performs configuration.
+
+   8. Program continues running and sends data to "results" as JSON.
+
+   9. Server receives data, performs visualization.
+   
+  10. Proceed to 6 until program performs all its iterations 
+  
+  10a. User allows program to finish execution completely
+
+  11. User turns on browser pointed at the logging server at address indicating a concrete logger "localhost:3000/log=results".  
+
+  12. The browser displays the data logged until that point.
+
+    result 0: asia
+    result 1: basia
+    result 2: casia
+    result 3: dasia
+

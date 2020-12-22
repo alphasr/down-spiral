@@ -1,0 +1,92 @@
+UC7. Custom logger
+
+  1. User writes a long running program, mocked up by this pseudocode
+
+     for i in 0.. {
+        start := current time
+        result := run long running task
+     }
+
+  2. User imports package or library in language appropriate manner 
+ 
+     import logging library
+
+     for i in 0.. {
+        start := current time
+        result := run long running task
+     }
+
+   3. User configures loggers to display data using a custom logger named "my_logger" 
+     import logging library
+
+     configure_logger("localhost", 3000, "results", CUSTOM, "my_logger")
+
+     for i in 0.. {
+        start := current time
+        result := run long running task
+     }
+
+   3a. Potentially the custom logger can have configuration options:
+
+     configure_logger("localhost", 3000, "results", CUSTOM, "my_logger", ...)
+
+   4. User logs data from running program to "results"
+
+     import logging library
+
+     configure_logger("localhost", 3000, "results", CUSTOM, "my_logger")
+
+     for i in 0.. {
+        start := current time
+        result := run long running task
+        log("results", ["i": i, "result": result])
+     }
+
+   5. User writes a module (eg. Node module, git repo) in JS/TS implementing a specific API. Example of a very simple logger:
+
+   {name: "my_logger",
+    visualizeAll: (domElement, data) => {
+        let text = "";
+        for (item of data) {
+            text += "hello: " + item + "<br/>";
+        }
+        domElement.innerHTML = text;
+    }
+    update: (dom_element, item) => {
+        domElement.innerHTML += ("hello: " + item + "<br/>");
+    }}
+
+   6. User commits module to a module repository (eg. npmjs or GitHub).
+
+   7. User opens server configuation file (eg. a JSON file) and adds a line indicating where to find new module:
+
+    {"loggers": {
+        "my_logger": "https://www.npmjs.com/package/my_new_down_spiral_logger"
+    }}     
+
+   7a. User restarts server
+
+   8. User turns on browser pointed at the logging server at address
+indicating a concrete logger "localhost:3000/log=results". 
+
+   9. User starts program.
+
+  10. Program runs and sends configuration for "results" to server at localhost:3000 as JSON. At this point "my_logger" is fully installed and operational.
+  
+  10a. If "my_logger" cannot be used, the call to the server returns an exception and halts the program.
+
+  11. Server receives configuration information, performs configuration.  
+
+  12. Program continues running and sends data to "results".
+
+  13. Server receives data, performs visualization using function provided by "my_logger" module.
+
+
+  14. The browser pointed at "results" updates it's visualization. Example after 4 iterations:
+
+        hello: ["n": 0, "result": "asia" ]
+        hello: ["n": 1, "result": "basia"]
+        hello: ["n": 2, "result": "casia"]
+        hello: ["n": 3, "result": "dasia"]
+
+  15. Proceed to 12

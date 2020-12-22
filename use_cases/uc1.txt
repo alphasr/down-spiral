@@ -1,0 +1,61 @@
+UC1. Logging to table
+
+  1. User writes a long running program, mocked up by this pseudocode
+
+     for i in 0.. {
+        result := run long running task
+     }
+
+  2. User imports package or library in language appropriate manner 
+ 
+     import logging library
+
+     for i in 0.. {
+        result := run long running task
+     }
+
+   3. User configures loggers to display data as a table
+ 
+     import logging library
+
+     configure_logger("localhost", 3000, "results", TABLE)
+
+     for i in 0.. {
+        result := run long running task
+     }
+
+   4. User logs data from running program, passes a dictionary-like structure containing the number of the iteration for column "i" and the value of the result to column "result"
+
+     import logging library
+
+     configure_logger("localhost", 3000, "results", TABLE)
+
+     for i in 0.. {
+        result := run long running task
+        log("results", ["i": i, "result": result])
+     }
+
+   5. User turns on browser pointed at the logging server at address indicating a concrete logger "localhost:3000/log=results". 
+
+   6. User starts program.
+
+   7. Program runs and sends configuration for "results" to server at localhost:3000 as JSON.
+
+   8. Server receives configuration information, performs configuration.
+
+   9. Program continues running and sends data to "results".
+
+  10. Server receives data, performs visualization.
+
+  11. If there was no data, the browser displays two colum headers: "i" and "result" (in that order). Then, the browser appends a row containing a number
+
+        +---+-------------+
+        | n | result      |
+        +---+-------------+
+        | 0 | asia        |
+        | 1 | basia       |
+        | 2 | casia       |
+        | 3 | dasia       |
+        +---+-------------+
+
+  12. Proceed to 9

@@ -1,0 +1,91 @@
+UC1b. Logging to table with heterogenous columns
+
+  1. User writes a long running program, mocked up by this pseudocode
+
+     for i in 0.. {
+        start := current time
+        result := run long running task
+        duration := concat(current time - start, "s")
+     }
+
+  2. User imports package or library in language appropriate manner 
+ 
+     import logging library
+
+     for i in 0.. {
+        start := current time
+        result := run long running task
+        duration := concat(current time - start, "s")
+     }
+
+   3. User configures loggers to display data as a table
+ 
+     import logging library
+
+     configure_logger("localhost", 3000, "results", TABLE)
+
+     for i in 0.. {
+        start := current time
+        result := run long running task
+        duration := concat(current time - start, "s")
+     }
+
+   4. User logs data from running program, passes a dictionary-like structure containing the number of the iteration for column "i" and the value of the result to column "result", if i is odd, in addition, the dictionary contains a column "elapsed" containing the duration value
+
+     import logging library
+
+     configure_logger("localhost", 3000, "results", TABLE)
+
+     for i in 0.. {
+        start := current time
+        result := run long running task
+        duration := concat(current time - start, "s")
+        if i is even {
+            log("results", ["i": i, "result": result, ""])
+        }
+        if i is odd { 
+            log("results", ["i": i, "elapsed": duration, "result": result, ""])
+        }
+     }
+
+   5. User turns on browser pointed at the logging server at address indicating a concrete logger "localhost:3000/log=results". 
+
+   6. User starts program.
+
+   7. Program runs and sends configuration for "results" to server at localhost:3000 as JSON.
+
+   8. Server receives configuration information, performs configuration.
+
+   9. Program continues running and sends data to "results" containing two columns.
+
+  10. Server receives data, performs visualization.
+
+  11. If there was no data, the browser displays two colum headers: "i" and "result" (in that order). Then, the browser appends a row containing a number and the result data in respective columns: "n" and "result". Example for 1st iteration:
+
+
+        +---+-------------+
+        | n | result      |
+        +---+-------------+
+        | 0 | asia        |
+        +---+-------------+
+
+  12. Program continues running and sends data to "results" containing three columns.
+  
+  13. Server receives data, performs visualization.
+  
+  14. The browser adds another column header: "" (mind order). Then, the browser appends a row containing a number and the result data in respective columns: "n", "elapsed" and "result". Example after 4 iterations:
+
+
+        +---+-------------+-------------+
+        | n | elapsed     | result      |
+        +---+-------------+-------------+
+        | 0 |             | asia        |
+        +---+-------------+-------------+
+        | 1 | 42s         | basia       |
+        +---+-------------+-------------+
+        | 2 |             | casia       |
+        +---+-------------+-------------+
+        | 3 | 13s         | dasia       |
+        +---+-------------+-------------+
+
+  15. Proceed to 9

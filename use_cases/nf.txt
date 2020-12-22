@@ -1,0 +1,7 @@
+Non-functional requirements:
+
+NF1. Logger system is portable to multiple operating systems
+NF2. Logger system has bindings in at least two programming languages (eg. Java and Python, left to student)
+NF3. Logger bindings are easy to port to other programming languages (minimal client)
+NF4. Logger visualization supports UTF
+NF5. Logging can be performed anywhere in the user's code regardless of context (no passing around logger objects)

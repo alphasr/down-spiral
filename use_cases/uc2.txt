@@ -1,0 +1,76 @@
+UC2. Logging to graph
+
+  1. User writes a long running program, mocked up by this pseudocode
+
+     for i in 0.. {
+        result := run long running task
+     }
+
+  2. User imports package or library in language appropriate manner 
+ 
+     import logging library
+
+     for i in 0.. {
+        result := run long running task
+     }
+
+   3. User configures loggers to display data as a scatterplot with axes called "X" and "Y"
+ 
+     import logging library
+
+     configure_logger("localhost", 3000, "results", GRAPH, SCATTERPLOT, "X", "Y")
+
+     for i in 0.. {
+        result := run long running task
+     }
+
+       3a. pie chart instead of scatterplot
+       3b. violin graph instead of scatterplot
+       3c. bar graph instead of scatterplot
+       3d. line graph instead of scatterplot
+       3e. etc.
+
+   4. User logs data from running program, passes a dictionary-like structure containing the number of the iteration for coordinates "x" and "y" and the value of the result to as a "label" 
+
+     import logging library
+
+     configure_logger("localhost", 3000, "results", GRAPH, SCATTERPLOT)
+
+     for i in 0.. {
+        result := run long running task
+        log("results", ["x": i, "y": i, "label": result])
+     }
+
+   5. User turns on browser pointed at the logging server at address indicating a concrete logger "localhost:3000/log=results". 
+
+   6. User starts program.
+
+   7. Program runs and sends configuration for "results" to server at localhost:3000 as JSON.
+
+   8. Server receives configuration information, performs configuration.
+
+   9. Program continues running and sends data to "results".
+
+  10. Server receives data, performs visualization.
+
+  11. The browser adds a point to the scatterplot at coordinates (0,0), (1,1), ... with the appropriate label. Example after 4 iterations:
+
+
+  X  ^
+     |
+   4 +
+     |
+   3 +          o dasia
+     |
+   2 +       o casia
+     |   
+   1 +   o basia  
+     |
+   0 + o asia
+       +--+--+--+--+--> 
+       0  1  2  3  4  Y
+
+  11a. pie chart
+  11b. etc.
+
+  12. Proceed to 9
