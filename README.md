@@ -16,18 +16,18 @@ DS has a typescript server with a react-native application to render logs in the
 
 - Clone the [repo](https://github.com/alphasr/down-spiral/)
 
-Switch to the master branch for the latest and the most updated version.
+  Switch to the master branch for the latest and the most updated version.
 
 - `cd dir:/down-spiral/frontend/`
 
-run `npm install`. This will install all dependencies.
+  run `npm install`. This will install all dependencies.
 
 - Running the <strong>Frontend</strong> - `cd dir:/down-spiral/frontend/`, run `npm run start`.
 
-On success connection `localhost:3000` can established.
+  On success connection `localhost:3000` can established.
 
 - Running the <strong>Server</strong> - `cd dir:/down-spiral/frontend/src/`, run `node server.js` .
 
-On success `listening on port 8000` message is displayed.
+  On success `listening on port 8000` message is displayed.
 
 ### `Still in development`
