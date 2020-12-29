@@ -1,13 +1,13 @@
-import React, { Dispatch, Fragment, useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { simplePrinter, spiralLogs } from "../../api";
+import React, { Dispatch, Fragment, useEffect, useState } from 'react';
+import { Table } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { simplePrinter, spiralLogs } from '../../api';
 import {
   ISimplePrinterLogActions,
   setSimplePrinterLog,
-} from "../../store/actions/simplePrinterActions";
-import { AppState } from "../../store/reducers";
-import { ISimplePrinterPayload } from "../../store/reducers/simplePrinterReducer";
+} from '../../store/actions/simplePrinterActions';
+import { AppState } from '../../store/reducers';
+import { ISimplePrinterPayload } from '../../store/reducers/simplePrinterReducer';
 
 interface IProps {
   sessionId: string;
@@ -26,9 +26,6 @@ const SimplePrinterSessionData: React.FC<IProps> = ({ sessionId }) => {
   useEffect(() => {
     const sessionIndexNew = log_data.findIndex(sessionIndex);
     setCurrentSession(log_data[sessionIndexNew]);
-
-    if (currentSession) getData(currentSession.data);
-
     const handleSetPayload = (payload: string) => {
       // const parsedPayload: ITableData = JSON.parse(payload);
       const parsedPayload: any = JSON.parse(payload);
@@ -42,7 +39,7 @@ const SimplePrinterSessionData: React.FC<IProps> = ({ sessionId }) => {
   const getData = (payload: any) => {
     let data: any[] = [];
     for (const key in payload) {
-      if (key !== "id") data.push(<td key={key}>{payload[key].toString()}</td>);
+      if (key !== 'id') data.push(<td key={key}>{payload[key].toString()}</td>);
     }
 
     return data.map((datum) => datum);
