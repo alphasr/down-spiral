@@ -5,7 +5,6 @@ import { IGraphData } from "../reducers/graphReducer";
 //ITable Actions
 export interface IGraphLogActions extends Action {
   type: types.SET_GRAPH_LOGS | types.DELETE_GRAPH_SESSION;
-
   payload: IGraphData[] | string;
 }
 

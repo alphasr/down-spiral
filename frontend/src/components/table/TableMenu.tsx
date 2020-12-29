@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { ButtonGroup, Button } from 'react-bootstrap';
+import React, { Fragment } from "react";
+import { ButtonGroup, Button } from "react-bootstrap";
 
 const TableMenu = () => {
   return (
@@ -7,7 +7,7 @@ const TableMenu = () => {
       <div className="center p-4">
         <div
           className="p-4 card shadow col-md-6"
-          style={{ backgroundColor: '#c6c6c6' }}
+          style={{ backgroundColor: "#c6c6c6" }}
         >
           <ButtonGroup className="mb-2">
             <Button>Table</Button>

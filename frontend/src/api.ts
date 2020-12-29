@@ -26,8 +26,22 @@ function spiralGraphs(cb: Function) {
   });
   socket.on("setGraph", (data: any) => cb(data));
 }
+function simplePrinter(cb: Function) {
+  console.log("inside simple logs");
+  socket.on("connect", function () {
+    try {
+      socket.emit("room", "myRoom");
+      console.log("entered room");
+    } catch (error) {
+      return simplePrinter(cb);
+    }
+  });
+  socket.on("setSimplePrinter", (data: any) => cb(data));
+}
 
 //   socket.on("test", (timestamp) => cb(null, timestamp));
 //   socket.emit("test", timestamp);
 // }
-export { spiralLogs, spiralGraphs };
+export { spiralLogs, spiralGraphs, simplePrinter };
+
+// {"sessionId":"results","label": "result 1:", "value":"1"}

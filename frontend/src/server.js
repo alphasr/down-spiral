@@ -18,18 +18,23 @@ ioServer.on("connection", (client) => {
   client.on("room", function (room) {
     client.join(room);
   });
-  client.on("tableHeader", (data) => {
+
+  client.on("SIMPLE_PRINTER", (data) => {
     dataJson = JSON.parse(data);
     console.log("client is subscribing with :::", JSON.stringify(dataJson));
 
-    client.in("myRoom").emit("setTableHeader", JSON.stringify(dataJson));
+    client.in("myRoom").emit("setSimplePrinter", JSON.stringify(dataJson));
   });
 
-  client.on("graphData", (data) => {
+  client.on("TABLE", (data) => {
     dataJson = JSON.parse(data);
     console.log("client is subscribing with :::", JSON.stringify(dataJson));
 
-    client.in("myRoom").emit("setGraph", JSON.stringify(dataJson));
+    // client.in("myRoom").emit("setGraph", JSON.stringify(dataJson));
+  });
+  client.on("HTML", (data) => {
+    dataJson = JSON.parse(data);
+    console.log("client is subscribing with :::", JSON.stringify(dataJson));
   });
 
   client.on("tableData", (data) => {
