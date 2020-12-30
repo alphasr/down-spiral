@@ -1,8 +1,9 @@
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.css';
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import HtmlPrinter from './pages/HtmlPrinter';
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.css";
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import HtmlPrinter from "./pages/HtmlPrinter";
+import Graph from "./pages/Graph";
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
       <Switch>
         {/* <Route exact path="/" component={Graph} /> */}
         {/* <Route path="/" component={Home} /> */}
-        <Route path="/" component={HtmlPrinter} />
+        <Route path="/" component={Graph} />
       </Switch>
     </React.Fragment>
   );

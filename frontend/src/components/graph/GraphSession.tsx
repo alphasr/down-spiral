@@ -35,7 +35,9 @@ const GraphSession: React.FC<IProps> = ({ sessionId }) => {
           label: currentSession?.datasets.label,
           data: currentSession?.datasets.data,
           backgroundColor: randomColor({
-            count: currentSession?.labels ? currentSession?.labels.length : 1,
+            count: currentSession?.datasets.data
+              ? currentSession?.datasets.data.length
+              : 1,
           }),
           borderWidth: 1,
         },
