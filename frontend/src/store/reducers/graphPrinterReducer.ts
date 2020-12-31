@@ -1,4 +1,4 @@
-import * as types from "../types";
+import * as types from '../types';
 
 export interface IGraphLogsState {
   // if session id exist, push data to data, else push object to state
@@ -20,31 +20,31 @@ export interface IGraphDataSingleton {
 export const initialGraphLogsState: IGraphLogsState = {
   sessionData: [
     {
-      type: "bar",
+      type: 'bar',
       labels: [
-        "2015-01",
-        "2015-02",
-        "2015-03",
-        "2015-04",
-        "2015-05",
-        "2015-06",
-        "2015-07",
-        "2015-08",
-        "2015-09",
-        "2015-10",
-        "2015-11",
-        "2015-12",
+        '2015-01',
+        '2015-02',
+        '2015-03',
+        '2015-04',
+        '2015-05',
+        '2015-06',
+        '2015-07',
+        '2015-08',
+        '2015-09',
+        '2015-10',
+        '2015-11',
+        '2015-12',
       ],
-      sessionId: "0",
+      sessionId: '0',
       datasets: {
-        label: "# of Tomatoes",
-        data: ["12", "19", "3", "5", "2", "3", "20", "3", "5", "6", "2", "25"],
+        label: '# of Tomatoes',
+        data: ['12', '19', '3', '5', '2', '3', '20', '3', '5', '6', '2', '25'],
       },
     },
   ],
 };
 
-export const graphLogReducer = (
+export const graphPrinterReducer = (
   state: IGraphLogsState = initialGraphLogsState,
   action: {
     type: types.SET_GRAPH_LOGS | types.DELETE_GRAPH_SESSION;
@@ -58,13 +58,13 @@ export const graphLogReducer = (
 
   switch (type) {
     case types.SET_GRAPH_LOGS: {
-      console.log("payload in reducer = ", JSON.stringify(payload));
+      console.log('payload in reducer = ', JSON.stringify(payload));
       if (
         state.sessionData.find(
           (session) => session.sessionId === graphDataPayload?.sessionId
         )
       ) {
-        console.log("found session id ");
+        console.log('found session id ');
         const sessionIndex = (session: IGraphData) =>
           session.sessionId === graphDataPayload?.sessionId;
         const tempData = state.sessionData;
@@ -74,7 +74,7 @@ export const graphLogReducer = (
           tempData[dataIndex].labels !== graphDataPayload?.labels &&
           tempData[dataIndex].datasets.data !== graphDataPayload.datasets.data
         ) {
-          console.log("labels and data is changed");
+          console.log('labels and data is changed');
 
           tempData[dataIndex].labels = tempData[dataIndex].labels.concat(
             graphDataPayload?.labels
@@ -84,7 +84,7 @@ export const graphLogReducer = (
             dataIndex
           ].datasets.data?.concat(graphDataPayload?.datasets.data);
         } else if (tempData[dataIndex].labels !== graphDataPayload?.labels) {
-          console.log("Labels is changed");
+          console.log('Labels is changed');
 
           tempData[dataIndex].labels = tempData[dataIndex].labels.concat(
             graphDataPayload?.labels
@@ -92,7 +92,7 @@ export const graphLogReducer = (
         } else if (
           tempData[dataIndex].datasets.data !== graphDataPayload.datasets.data
         ) {
-          console.log("Data and data is changed");
+          console.log('Data and data is changed');
 
           tempData[dataIndex].datasets.label = graphDataPayload?.datasets.label;
           tempData[dataIndex].datasets.data = tempData[

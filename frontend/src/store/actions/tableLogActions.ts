@@ -1,6 +1,6 @@
-import * as types from "../types";
-import { ActionCreator, Action } from "redux";
-import { ITableData } from "../reducers/tableLogsReducer";
+import * as types from '../types';
+import { ActionCreator, Action } from 'redux';
+import { ITableData } from '../reducers/tablePrinterReducer';
 
 //ITable Actions
 export interface ITableLogActions extends Action {

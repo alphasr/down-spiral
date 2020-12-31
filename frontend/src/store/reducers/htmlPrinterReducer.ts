@@ -19,7 +19,7 @@ export const initialGraphLogsState: IHtmlPrinterState = {
   ],
 };
 
-export const htmlLogReducer = (
+export const htmlPrinterReducer = (
   state: IHtmlPrinterState = initialGraphLogsState,
   action: {
     type: types.SET_HTML_PRINTER_LOG | types.DELETE_HTML_PRINTER_SESSION;

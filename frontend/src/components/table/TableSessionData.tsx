@@ -1,24 +1,24 @@
-import React, { Dispatch, Fragment, useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { spiralLogs } from "../../api";
+import React, { Dispatch, Fragment, useEffect, useState } from 'react';
+import { Table } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { spiralLogs } from '../../api';
 import {
   ITableLogActions,
   setTableHeaderLog,
   setTableLog,
-} from "../../store/actions/tableLogActions";
-import { AppState } from "../../store/reducers";
+} from '../../store/actions/tableLogActions';
+import { AppState } from '../../store/reducers';
 import {
   ITableData,
   ITableDataSingleton,
-} from "../../store/reducers/tableLogsReducer";
+} from '../../store/reducers/tablePrinterReducer';
 
 interface IProps {
   sessionId: string;
 }
 
 const TableSessions: React.FC<IProps> = ({ sessionId }) => {
-  const { sessionData } = useSelector((state: AppState) => state.tableLog);
+  const { sessionData } = useSelector((state: AppState) => state.tablePrinter);
   const tableLogDispatch = useDispatch<Dispatch<ITableLogActions>>();
 
   const [currentSession, setCurrentSession] = useState<ITableData>();
@@ -36,7 +36,7 @@ const TableSessions: React.FC<IProps> = ({ sessionId }) => {
       const parsedPayload: any = JSON.parse(payload);
 
       // const newPayload: ITableData = parsedPayload;
-      if (typeof parsedPayload[0] === "string") {
+      if (typeof parsedPayload[0] === 'string') {
         return tableLogDispatch(setTableHeaderLog(parsedPayload));
       }
 

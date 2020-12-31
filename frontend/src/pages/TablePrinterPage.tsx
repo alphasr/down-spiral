@@ -1,14 +1,14 @@
-import React, { Fragment, Dispatch, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { Fragment, Dispatch, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   ITableLogActions,
   setTableHeaderLog,
   setTableLog,
-} from "../store/actions/tableLogActions";
-import { ITableData } from "../store/reducers/tableLogsReducer";
+} from '../store/actions/tableLogActions';
+import { ITableData } from '../store/reducers/tablePrinterReducer';
 
-import { spiralLogs } from "../api";
-import TableSessions from "../components/table/TableSessions";
+import { spiralLogs } from '../api';
+import TableSessions from '../components/table/TableSessions';
 
 const TableLog = () => {
   //   const { header, data } = useSelector((state: AppState) => state.tableLog);
@@ -31,7 +31,7 @@ const TableLog = () => {
         parsedPayload.data &&
         parsedPayload.sessionId
       ) {
-        if (typeof parsedPayload[0] === "string") {
+        if (typeof parsedPayload[0] === 'string') {
           const data: string[] = parsedPayload.header;
           return tableLogDispatch(setTableHeaderLog(data));
         }

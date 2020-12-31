@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
-import { tableLogReducer } from './tableLogsReducer';
-import { graphLogReducer } from './graphReducer';
+import { tablePrinterReducer } from './tablePrinterReducer';
+import { graphPrinterReducer } from './graphPrinterReducer';
 import { simplePrinterReducer } from './simplePrinterReducer';
-import { htmlLogReducer } from './htmlReducer';
+import { htmlPrinterReducer } from './htmlPrinterReducer';
 const rootReducer = combineReducers({
-  tableLog: tableLogReducer,
-  graphLog: graphLogReducer,
+  tablePrinter: tablePrinterReducer,
+  graphPrinter: graphPrinterReducer,
   simplePrinter: simplePrinterReducer,
-  htmlPrinter: htmlLogReducer,
+  htmlPrinter: htmlPrinterReducer,
 });
 export type AppState = ReturnType<typeof rootReducer>;
 export default rootReducer;

@@ -1,4 +1,4 @@
-import React, { Dispatch, Fragment, useEffect, useState } from "react";
+import React, { Dispatch, Fragment, useEffect, useState } from 'react';
 import {
   Bar,
   Bubble,
@@ -7,12 +7,12 @@ import {
   Polar,
   Radar,
   Scatter,
-} from "react-chartjs-2";
-import { useSelector, useDispatch } from "react-redux";
-import { IGraphLogActions } from "../../store/actions/graphLogActions";
-import { AppState } from "../../store/reducers";
-import { IGraphData } from "../../store/reducers/graphReducer";
-var randomColor = require("randomcolor");
+} from 'react-chartjs-2';
+import { useSelector, useDispatch } from 'react-redux';
+import { IGraphLogActions } from '../../store/actions/graphLogActions';
+import { AppState } from '../../store/reducers';
+import { IGraphData } from '../../store/reducers/graphPrinterReducer';
+var randomColor = require('randomcolor');
 
 interface IProps {
   sessionId: string;
@@ -27,7 +27,7 @@ const GraphSession: React.FC<IProps> = ({ sessionId }) => {
   }, [sessionId]);
 
   let barState = {
-    type: currentSession?.type ? currentSession.type : "bar",
+    type: currentSession?.type ? currentSession.type : 'bar',
     data: {
       labels: currentSession?.labels,
       datasets: [
@@ -57,7 +57,7 @@ const GraphSession: React.FC<IProps> = ({ sessionId }) => {
             },
           },
           {
-            position: "top",
+            position: 'top',
             ticks: {
               maxRotation: 90,
               minRotation: 80,
@@ -78,7 +78,7 @@ const GraphSession: React.FC<IProps> = ({ sessionId }) => {
     },
   };
 
-  const { sessionData } = useSelector((state: AppState) => state.graphLog);
+  const { sessionData } = useSelector((state: AppState) => state.graphPrinter);
   const graphLogDispatch = useDispatch<Dispatch<IGraphLogActions>>();
 
   const sessionIndex = (session: IGraphData) =>
@@ -86,12 +86,12 @@ const GraphSession: React.FC<IProps> = ({ sessionId }) => {
 
   useEffect(() => {
     const sessionIndexNew = sessionData.findIndex(sessionIndex);
-    console.log("log is = ", JSON.stringify(sessionData[sessionIndexNew])); //working
+    console.log('log is = ', JSON.stringify(sessionData[sessionIndexNew])); //working
 
     const payload: IGraphData = sessionData[sessionIndexNew]; // not-working
     setCurrentSession(payload);
 
-    console.log("current session = ");
+    console.log('current session = ');
   }, [graphLogDispatch, sessionId]);
 
   return (
@@ -108,25 +108,25 @@ const GraphSession: React.FC<IProps> = ({ sessionId }) => {
           </div>
         )}
       </div> */}
-      {barState.type === "bar" && (
+      {barState.type === 'bar' && (
         <Bar data={barState.data} options={barState.options} />
       )}
-      {barState.type === "line" && (
+      {barState.type === 'line' && (
         <Line data={barState.data} options={barState.options} />
       )}
-      {barState.type === "radar" && (
+      {barState.type === 'radar' && (
         <Radar data={barState.data} options={barState.options} />
       )}
-      {barState.type === "doughnut" && (
+      {barState.type === 'doughnut' && (
         <Doughnut data={barState.data} options={barState.options} />
       )}
-      {barState.type === "polarArea" && (
+      {barState.type === 'polarArea' && (
         <Polar data={barState.data} options={barState.options} />
       )}
-      {barState.type === "bubble" && (
+      {barState.type === 'bubble' && (
         <Bubble data={barState.data} options={barState.options} />
       )}
-      {barState.type === "scatter" && (
+      {barState.type === 'scatter' && (
         <Scatter data={barState.data} options={barState.options} />
       )}
     </Fragment>

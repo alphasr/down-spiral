@@ -6,7 +6,7 @@ import {
   setHtmlPrinterLog,
 } from '../../store/actions/htmlPrinterActions';
 import { AppState } from '../../store/reducers';
-import { IHtmlPrinterPayload } from '../../store/reducers/htmlReducer';
+import { IHtmlPrinterPayload } from '../../store/reducers/htmlPrinterReducer';
 
 interface IProps {
   sessionId: string;

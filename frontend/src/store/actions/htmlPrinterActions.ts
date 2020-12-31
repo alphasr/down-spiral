@@ -1,6 +1,6 @@
 import * as types from '../types';
 import { ActionCreator, Action } from 'redux';
-import { IHtmlPrinterPayload } from '../reducers/htmlReducer';
+import { IHtmlPrinterPayload } from '../reducers/htmlPrinterReducer';
 
 //ITable Actions
 export interface IHtmlPrinterLogActions extends Action {

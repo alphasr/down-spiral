@@ -1,31 +1,31 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { Dispatch, Fragment, useEffect, useState } from "react";
-import { ButtonGroup, Button, Badge } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import GraphSession from "../components/graph/GraphSession";
-import { AppState } from "../store/reducers";
-import { faCoffee, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { Dispatch, Fragment, useEffect, useState } from 'react';
+import { ButtonGroup, Button, Badge } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import GraphSession from '../components/graph/GraphSession';
+import { AppState } from '../store/reducers';
+import { faCoffee, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import {
   deleteGraphSession,
   IGraphLogActions,
   setGraphLog,
-} from "../store/actions/graphLogActions";
-import { spiralGraphs } from "../api";
-import { IGraphData } from "../store/reducers/graphReducer";
+} from '../store/actions/graphLogActions';
+import { spiralGraphs } from '../api';
+import { IGraphData } from '../store/reducers/graphPrinterReducer';
 
 const Graph = () => {
-  const { sessionData } = useSelector((state: AppState) => state.graphLog);
+  const { sessionData } = useSelector((state: AppState) => state.graphPrinter);
   const [graphOneSession, setGraphOneSession] = useState<string>(); // 1 graph, 2 graph, 3 graphs
   const graphLogDispatch = useDispatch<Dispatch<IGraphLogActions>>();
-  const [graphLayout, setGraphLayout] = useState<string>("1_graph"); // 1 graph, 2 graph, 3 graphs
+  const [graphLayout, setGraphLayout] = useState<string>('1_graph'); // 1 graph, 2 graph, 3 graphs
   const [twoGraphSession, setTwoGraphSession] = useState({
-    graphOneSessionId: "",
-    graphTwoSessionId: "",
+    graphOneSessionId: '',
+    graphTwoSessionId: '',
   }); // 1 graph, 2 graph, 3 graphs
   const [threeGraphSession, setThreeGraphSession] = useState({
-    graphOneSessionId: "",
-    graphTwoSessionId: "",
-    graphThreeSessionId: "",
+    graphOneSessionId: '',
+    graphTwoSessionId: '',
+    graphThreeSessionId: '',
   }); // 1 graph, 2 graph, 3 graphs
 
   const handleSetGraphLayout = (payload: string) => {
@@ -36,9 +36,9 @@ const Graph = () => {
     return setGraphOneSession(sessionId);
   };
   const handleSetGraphTwoSessionId = (sessionId: string, graph: number) => {
-    console.log("inside 2nd graph", sessionId, graph);
+    console.log('inside 2nd graph', sessionId, graph);
     if (graph === 1) {
-      console.log("inside graph 1");
+      console.log('inside graph 1');
       return setTwoGraphSession({
         ...twoGraphSession,
         graphOneSessionId: sessionId,
@@ -77,7 +77,7 @@ const Graph = () => {
 
   useEffect(() => {
     const handleSetPayload = (payload: string) => {
-      console.log("setting graph data");
+      console.log('setting graph data');
       const parsedPayload: any = JSON.parse(payload);
       if (
         parsedPayload.labels &&
@@ -113,41 +113,41 @@ const Graph = () => {
         >
           <Button
             type="button"
-            onClick={() => handleSetGraphLayout("1_graph")}
+            onClick={() => handleSetGraphLayout('1_graph')}
             className={`btn btn-outline-primary ${
-              graphLayout === "1_graph" ? "active" : ""
+              graphLayout === '1_graph' ? 'active' : ''
             }`}
           >
             1 Graph
           </Button>
           <Button
             type="button"
-            onClick={() => handleSetGraphLayout("2_graph")}
+            onClick={() => handleSetGraphLayout('2_graph')}
             className={`btn btn-outline-primary ${
-              graphLayout === "2_graph" ? "active" : ""
+              graphLayout === '2_graph' ? 'active' : ''
             }`}
           >
             2 Graphs
           </Button>
           <Button
             type="button"
-            onClick={() => handleSetGraphLayout("3_graph")}
+            onClick={() => handleSetGraphLayout('3_graph')}
             className={`btn btn-outline-primary ${
-              graphLayout === "3_graph" ? "active" : ""
+              graphLayout === '3_graph' ? 'active' : ''
             }`}
           >
             3 Graphs
           </Button>
         </div>
 
-        {graphLayout === "1_graph" && (
+        {graphLayout === '1_graph' && (
           <div>
             <div className="row ml-2 scroll-y-allow">
               {sessionData.map((session) => (
                 <React.Fragment>
                   <div
                     style={{
-                      border: "1px solid #2e2e2e",
+                      border: '1px solid #2e2e2e',
                       borderRadius: 5,
                       padding: 2,
                       margin: 2,
@@ -167,7 +167,7 @@ const Graph = () => {
                           className="font-thin pl-3 pr-3 pb-2 pt-2"
                         >
                           {session.sessionId}
-                          <span style={{ marginRight: "20px" }}></span>
+                          <span style={{ marginRight: '20px' }}></span>
                         </Badge>
                       </span>
                     </Button>
@@ -184,11 +184,11 @@ const Graph = () => {
             {graphOneSession ? (
               <GraphSession sessionId={graphOneSession} />
             ) : (
-              ""
+              ''
             )}
           </div>
         )}
-        {graphLayout === "2_graph" && (
+        {graphLayout === '2_graph' && (
           <React.Fragment>
             <div className="row">
               <div className="col-lg-6">
@@ -197,7 +197,7 @@ const Graph = () => {
                     <React.Fragment>
                       <div
                         style={{
-                          border: "1px solid #2e2e2e",
+                          border: '1px solid #2e2e2e',
                           borderRadius: 5,
                           padding: 2,
                           margin: 2,
@@ -217,7 +217,7 @@ const Graph = () => {
                               className="font-thin pl-3 pr-3 pb-2 pt-2"
                             >
                               {session.sessionId}
-                              <span style={{ marginRight: "20px" }}></span>
+                              <span style={{ marginRight: '20px' }}></span>
                             </Badge>
                           </span>
                         </Button>
@@ -246,7 +246,7 @@ const Graph = () => {
                     <React.Fragment>
                       <div
                         style={{
-                          border: "1px solid #2e2e2e",
+                          border: '1px solid #2e2e2e',
                           borderRadius: 5,
                           padding: 2,
                           margin: 2,
@@ -266,7 +266,7 @@ const Graph = () => {
                               className="font-thin pl-3 pr-3 pb-2 pt-2"
                             >
                               {session.sessionId}
-                              <span style={{ marginRight: "20px" }}></span>
+                              <span style={{ marginRight: '20px' }}></span>
                             </Badge>
                           </span>
                         </Button>
@@ -291,7 +291,7 @@ const Graph = () => {
             </div>
           </React.Fragment>
         )}
-        {graphLayout === "3_graph" && (
+        {graphLayout === '3_graph' && (
           <React.Fragment>
             <div className="row">
               <div className="col-lg-4">
@@ -300,7 +300,7 @@ const Graph = () => {
                     <React.Fragment>
                       <div
                         style={{
-                          border: "1px solid #2e2e2e",
+                          border: '1px solid #2e2e2e',
                           borderRadius: 5,
                           padding: 2,
                           margin: 2,
@@ -320,7 +320,7 @@ const Graph = () => {
                               className="font-thin pl-3 pr-3 pb-2 pt-2"
                             >
                               {session.sessionId}
-                              <span style={{ marginRight: "20px" }}></span>
+                              <span style={{ marginRight: '20px' }}></span>
                             </Badge>
                           </span>
                         </Button>
@@ -349,7 +349,7 @@ const Graph = () => {
                     <React.Fragment>
                       <div
                         style={{
-                          border: "1px solid #2e2e2e",
+                          border: '1px solid #2e2e2e',
                           borderRadius: 5,
                           padding: 2,
                           margin: 2,
@@ -369,7 +369,7 @@ const Graph = () => {
                               className="font-thin pl-3 pr-3 pb-2 pt-2"
                             >
                               {session.sessionId}
-                              <span style={{ marginRight: "20px" }}></span>
+                              <span style={{ marginRight: '20px' }}></span>
                             </Badge>
                           </span>
                         </Button>
@@ -397,7 +397,7 @@ const Graph = () => {
                     <React.Fragment>
                       <div
                         style={{
-                          border: "1px solid #2e2e2e",
+                          border: '1px solid #2e2e2e',
                           borderRadius: 5,
                           padding: 2,
                           margin: 2,
@@ -417,7 +417,7 @@ const Graph = () => {
                               className="font-thin pl-3 pr-3 pb-2 pt-2"
                             >
                               {session.sessionId}
-                              <span style={{ marginRight: "20px" }}></span>
+                              <span style={{ marginRight: '20px' }}></span>
                             </Badge>
                           </span>
                         </Button>
@@ -472,7 +472,7 @@ const Graph = () => {
             </div>
           </React.Fragment>
         )} */}
-        {sessionData.length === 0 && "No available sessions"}
+        {sessionData.length === 0 && 'No available sessions'}
         {/* <TableSessionData sessionId={currentSession} /> */}
       </div>
     </Fragment>

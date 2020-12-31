@@ -1,6 +1,6 @@
-import * as types from "../types";
-import { ActionCreator, Action } from "redux";
-import { IGraphData } from "../reducers/graphReducer";
+import * as types from '../types';
+import { ActionCreator, Action } from 'redux';
+import { IGraphData } from '../reducers/graphPrinterReducer';
 
 //ITable Actions
 export interface IGraphLogActions extends Action {

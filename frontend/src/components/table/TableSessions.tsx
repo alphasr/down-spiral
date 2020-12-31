@@ -1,17 +1,17 @@
-import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { Dispatch, Fragment, useState } from "react";
-import { ButtonGroup, Button, Badge } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { Dispatch, Fragment, useState } from 'react';
+import { ButtonGroup, Button, Badge } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   deleteTableSession,
   ITableLogActions,
-} from "../../store/actions/tableLogActions";
-import { AppState } from "../../store/reducers";
-import TableSessionData from "./TableSessionData";
+} from '../../store/actions/tableLogActions';
+import { AppState } from '../../store/reducers';
+import TableSessionData from './TableSessionData';
 
 const TableSessions = () => {
-  const { sessionData } = useSelector((state: AppState) => state.tableLog);
+  const { sessionData } = useSelector((state: AppState) => state.tablePrinter);
   const [currentSession, setCurrentSession] = useState<string>();
   const tableLogDispatch = useDispatch<Dispatch<ITableLogActions>>();
 
@@ -36,7 +36,7 @@ const TableSessions = () => {
             <React.Fragment>
               <div
                 style={{
-                  border: "1px solid #2e2e2e",
+                  border: '1px solid #2e2e2e',
                   borderRadius: 5,
                   padding: 2,
                   margin: 2,
@@ -54,7 +54,7 @@ const TableSessions = () => {
                       className="font-thin pl-3 pr-3 pb-2 pt-2"
                     >
                       {session.sessionId}
-                      <span style={{ marginRight: "20px" }}></span>
+                      <span style={{ marginRight: '20px' }}></span>
                     </Badge>
                   </span>
                 </Button>
@@ -69,7 +69,7 @@ const TableSessions = () => {
           ))}
         </div>
         {currentSession && <TableSessionData sessionId={currentSession} />}
-        {sessionData.length === 0 && "No available sessions"}
+        {sessionData.length === 0 && 'No available sessions'}
       </div>
     </Fragment>
   );
