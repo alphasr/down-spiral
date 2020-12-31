@@ -111,35 +111,41 @@ export const tablePrinterReducer = (
   switch (type) {
     case types.SET_TABLE_DATA_LOG: {
       console.log('payload in reducer = ', JSON.stringify(tablePayload));
-      if (
-        state.sessionData.find(
-          (session) => session.sessionId === tablePayload.sessionId
-        )
-      ) {
-        const sessionIndex = (session: ITableData) =>
-          session.sessionId === tablePayload?.sessionId;
-        const tempData = state.sessionData;
-        const dataIndex = state.sessionData.findIndex(sessionIndex);
-        var obj = JSON.parse(tablePayload.data[0]);
-
-        let name;
-        for (name in obj) {
-          console.log(name);
-        }
-
-        // ////////////////////
-
-        // //////////////////
-        // tablePayload?.data.forEach((datum) =>
-        //   tempData[dataIndex].data.push(datum)
-        // );
-        // tempData[dataIndex].header = tablePayload.header;
-        // if (state.sessionData[dataIndex].data === tempData[dataIndex].data)
-        //   return state;
-        // return { ...state, sessionData: tempData };
-        return state;
+      let name;
+      for (name in tablePayload.data[0]) {
+        console.log('Inside reducer table', name);
       }
-      return { ...state, sessionData: [...state.sessionData, tableData] };
+
+      // if (
+      //   state.sessionData.find(
+      //     (session) => session.sessionId === tablePayload.sessionId
+      //   )
+      // ) {
+      //   const sessionIndex = (session: ITableData) =>
+      //     session.sessionId === tablePayload?.sessionId;
+      //   const tempData = state.sessionData;
+      //   const dataIndex = state.sessionData.findIndex(sessionIndex);
+      //   // var obj = JSON.parse(tablePayload.data[0]);
+
+      //   let name;
+      //   for (name in tablePayload.data[0]) {
+      //     console.log('Inside reducer table', name);
+      //   }
+
+      //   // ////////////////////
+
+      //   // //////////////////
+      //   // tablePayload?.data.forEach((datum) =>
+      //   //   tempData[dataIndex].data.push(datum)
+      //   // );
+      //   // tempData[dataIndex].header = tablePayload.header;
+      //   // if (state.sessionData[dataIndex].data === tempData[dataIndex].data)
+      //   //   return state;
+      //   // return { ...state, sessionData: tempData };
+      //   return state;
+      // }
+      // return { ...state, sessionData: [...state.sessionData, tableData] };
+      return state;
     }
     case types.DELETE_TABLE_SESSION: {
       const newState = state.sessionData.filter(
