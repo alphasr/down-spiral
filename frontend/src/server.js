@@ -1,6 +1,6 @@
-const { parseJsonText } = require("typescript");
+const { parseJsonText } = require('typescript');
 
-const ioServer = require("socket.io")();
+const ioServer = require('socket.io')();
 
 // ioServer.on("connection", (client) => {
 //   client.on("room", function (room) {
@@ -14,46 +14,47 @@ const ioServer = require("socket.io")();
 //     client.in("myRoom").emit("temp", dataJson);
 //   });
 // });
-ioServer.on("connection", (client) => {
-  client.on("room", function (room) {
+ioServer.on('connection', (client) => {
+  client.on('room', function (room) {
     client.join(room);
   });
 
-  client.on("SIMPLE_PRINTER", (data) => {
+  client.on('SIMPLE_PRINTER', (data) => {
     dataJson = JSON.parse(data);
-    console.log("client is subscribing with :::", JSON.stringify(dataJson));
+    console.log('client is subscribing with :::', JSON.stringify(dataJson));
 
-    client.in("myRoom").emit("setSimplePrinter", JSON.stringify(dataJson));
+    client.in('myRoom').emit('setSimplePrinter', JSON.stringify(dataJson));
   });
-  client.on("HTML_PRINTER", (data) => {
+  client.on('HTML_PRINTER', (data) => {
     dataJson = JSON.parse(data);
-    console.log("client is subscribing with :::", JSON.stringify(dataJson));
+    console.log('client is subscribing with :::', JSON.stringify(dataJson));
 
-    client.in("myRoom").emit("setHtmlPrinter", JSON.stringify(dataJson));
-  });
-
-  client.on("GRAPH_PRINTER", (data) => {
-    dataJson = JSON.parse(data);
-    console.log("client is subscribing with :::", JSON.stringify(dataJson));
-
-    client.in("myRoom").emit("setGraph", JSON.stringify(dataJson));
-  });
-  client.on("HTML", (data) => {
-    dataJson = JSON.parse(data);
-    console.log("client is subscribing with :::", JSON.stringify(dataJson));
+    client.in('myRoom').emit('setHtmlPrinter', JSON.stringify(dataJson));
   });
 
-  client.on("TABLE_PRINTER", (data) => {
+  client.on('GRAPH_PRINTER', (data) => {
     dataJson = JSON.parse(data);
-    console.log("client is subscribing with :::", JSON.stringify(dataJson));
+    console.log('client is subscribing with :::', JSON.stringify(dataJson));
 
-    //client.in("myRoom").emit("setTableData", JSON.stringify(dataJson));
+    client.in('myRoom').emit('setGraph', JSON.stringify(dataJson));
+  });
+
+  client.on('HTML', (data) => {
+    dataJson = JSON.parse(data);
+    console.log('client is subscribing with :::', JSON.stringify(dataJson));
+  });
+
+  client.on('TABLE_PRINTER', (data) => {
+    dataJson = JSON.parse(data);
+    console.log('client is subscribing with :::', JSON.stringify(dataJson));
+
+    client.in('myRoom').emit('setTableData', JSON.stringify(dataJson));
   });
 });
 
 const port = 8000;
 ioServer.listen(port);
-console.log("listening on port ", port);
+console.log('listening on port ', port);
 
 // let express = require("express"),
 //   app = express(),

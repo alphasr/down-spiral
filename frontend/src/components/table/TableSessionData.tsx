@@ -1,7 +1,7 @@
 import React, { Dispatch, Fragment, useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { spiralLogs } from '../../api';
+import { spiralLogs, tablePrinter } from '../../api';
 import {
   ITableLogActions,
   setTableHeaderLog,
@@ -43,7 +43,7 @@ const TableSessions: React.FC<IProps> = ({ sessionId }) => {
       // return tableLogDispatch(setTableLog(newPayload));
       return tableLogDispatch(setTableLog(parsedPayload));
     };
-    spiralLogs((payload: string) => handleSetPayload(payload));
+    tablePrinter((payload: string) => handleSetPayload(payload));
   }, [sessionId]);
 
   const getData = (payload: any) => {
