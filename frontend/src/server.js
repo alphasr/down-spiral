@@ -43,11 +43,11 @@ ioServer.on("connection", (client) => {
     console.log("client is subscribing with :::", JSON.stringify(dataJson));
   });
 
-  client.on("tableData", (data) => {
+  client.on("TABLE_PRINTER", (data) => {
     dataJson = JSON.parse(data);
     console.log("client is subscribing with :::", JSON.stringify(dataJson));
 
-    client.in("myRoom").emit("setTableData", JSON.stringify(dataJson));
+    //client.in("myRoom").emit("setTableData", JSON.stringify(dataJson));
   });
 });
 
@@ -78,3 +78,9 @@ console.log("listening on port ", port);
 // // attach socket to the node server
 // let ioNew = require("socket.io").listen(server);
 // require("./socket")(ioNew);
+
+// client is subscribing with ::: {"result":"polo","i":"0"}
+// client is subscribing with ::: {"result":"rolo","i":"1","elaspsed":"rolo"}
+// client is subscribing with ::: {"result":"kolo","i":"2"}
+// client is subscribing with ::: {"result":"jj","i":"3","elaspsed":"jj"}
+// client is subscribing with ::: {"result":"kfing","i":"4"}

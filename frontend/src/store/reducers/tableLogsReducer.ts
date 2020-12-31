@@ -141,3 +141,9 @@ export const tableLogReducer = (
       return state;
   }
 };
+
+// client is subscribing with ::: {"sessionId":"results2","rowData":[{"result":"polo","i":"0"}]}
+// client is subscribing with ::: {"sessionId":"results2","rowData":[{"result":"rolo","i":"1","elaspsed":"rolo"}]}
+// client is subscribing with ::: {"sessionId":"results2","rowData":[{"result":"kolo","i":"2"}]}
+// client is subscribing with ::: {"sessionId":"results2","rowData":[{"result":"jj","i":"3","elaspsed":"jj"}]}
+// client is subscribing with ::: {"sessionId":"results2","rowData":[{"result":"kfing","i":"4"}]}
