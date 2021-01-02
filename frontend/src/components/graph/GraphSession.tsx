@@ -1,134 +1,450 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Dispatch, Fragment, useEffect, useState } from 'react';
-import {
-  Bar,
-  Bubble,
-  Doughnut,
-  Line,
-  Polar,
-  Radar,
-  Scatter,
-} from 'react-chartjs-2';
-import { useSelector, useDispatch } from 'react-redux';
-import { IGraphLogActions } from '../../store/actions/graphLogActions';
+import { Button, Badge } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { AppState } from '../../store/reducers';
 import { IGraphData } from '../../store/reducers/graphPrinterReducer';
-var randomColor = require('randomcolor');
+import {
+  IGraphLogActions,
+  deleteGraphSession,
+  setGraphLog,
+} from '../../store/actions/graphLogActions';
+import { spiralGraphs } from '../../api';
+import GraphSessionData from './GraphSessionData';
 
-interface IProps {
-  sessionId: string;
-}
+const GraphSession = () => {
+  const { sessionData } = useSelector((state: AppState) => state.graphPrinter);
+  const [graphOneSession, setGraphOneSession] = useState<string>(); // 1 graph, 2 graph, 3 graphs
+  const graphLogDispatch = useDispatch<Dispatch<IGraphLogActions>>();
+  const [graphLayout, setGraphLayout] = useState<string>('1_graph'); // 1 graph, 2 graph, 3 graphs
+  const [twoGraphSession, setTwoGraphSession] = useState({
+    graphOneSessionId: '',
+    graphTwoSessionId: '',
+  }); // 1 graph, 2 graph, 3 graphs
+  const [threeGraphSession, setThreeGraphSession] = useState({
+    graphOneSessionId: '',
+    graphTwoSessionId: '',
+    graphThreeSessionId: '',
+  }); // 1 graph, 2 graph, 3 graphs
 
-const GraphSession: React.FC<IProps> = ({ sessionId }) => {
-  const [currentSession, setCurrentSession] = useState<IGraphData>();
-
-  useEffect(() => {
-    if (sessionId === undefined || sessionId === null)
-      setCurrentSession(undefined);
-  }, [sessionId]);
-
-  let barState = {
-    type: currentSession?.type ? currentSession.type : 'bar',
-    data: {
-      labels: currentSession?.labels,
-      datasets: [
-        {
-          label: currentSession?.datasets.label,
-          data: currentSession?.datasets.data,
-          backgroundColor: randomColor({
-            count: currentSession?.datasets.data
-              ? currentSession?.datasets.data.length
-              : 1,
-          }),
-          borderWidth: 1,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      scales: {
-        xAxes: [
-          {
-            ticks: {
-              maxRotation: 90,
-              minRotation: 80,
-            },
-            gridLines: {
-              offsetGridLines: true, //
-            },
-          },
-          {
-            position: 'top',
-            ticks: {
-              maxRotation: 90,
-              minRotation: 80,
-            },
-            gridLines: {
-              offsetGridLines: true, //
-            },
-          },
-        ],
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-            },
-          },
-        ],
-      },
-    },
+  const handleSetGraphLayout = (payload: string) => {
+    return setGraphLayout(payload);
   };
 
-  const { sessionData } = useSelector((state: AppState) => state.graphPrinter);
-  const graphLogDispatch = useDispatch<Dispatch<IGraphLogActions>>();
+  const handleSetGraphOneSession = (sessionId: string) => {
+    return setGraphOneSession(sessionId);
+  };
+  const handleSetGraphTwoSessionId = (sessionId: string, graph: number) => {
+    console.log('inside 2nd graph', sessionId, graph);
+    if (graph === 1) {
+      console.log('inside graph 1');
+      return setTwoGraphSession({
+        ...twoGraphSession,
+        graphOneSessionId: sessionId,
+      });
+    }
+    if (graph === 2)
+      return setTwoGraphSession({
+        ...twoGraphSession,
+        graphTwoSessionId: sessionId,
+      });
+  };
+  const handleSetGraphThreeSessionId = (sessionId: string, graph: number) => {
+    if (graph === 1)
+      return setThreeGraphSession({
+        ...threeGraphSession,
+        graphOneSessionId: sessionId,
+      });
+    if (graph === 2)
+      return setThreeGraphSession({
+        ...threeGraphSession,
+        graphTwoSessionId: sessionId,
+      });
+    if (graph === 3)
+      return setThreeGraphSession({
+        ...threeGraphSession,
+        graphThreeSessionId: sessionId,
+      });
+  };
 
-  const sessionIndex = (session: IGraphData) =>
-    session.sessionId === sessionId ? true : false;
+  const handleDeleteSession = (sessionId: string) => {
+    return (
+      graphLogDispatch(deleteGraphSession(sessionId)),
+      setGraphOneSession(undefined)
+    );
+  };
 
   useEffect(() => {
-    const sessionIndexNew = sessionData.findIndex(sessionIndex);
-    console.log('log is = ', JSON.stringify(sessionData[sessionIndexNew])); //working
+    const handleSetPayload = (payload: string) => {
+      console.log('setting graph data');
+      const parsedPayload: any = JSON.parse(payload);
+      if (
+        parsedPayload.labels &&
+        parsedPayload.datasets &&
+        parsedPayload.sessionId
+      ) {
+        const data: IGraphData = {
+          type: parsedPayload.type,
+          labels: parsedPayload.labels,
+          datasets: parsedPayload.datasets,
+          sessionId: parsedPayload.sessionId,
+        };
 
-    const payload: IGraphData = sessionData[sessionIndexNew]; // not-working
-    setCurrentSession(payload);
+        return graphLogDispatch(setGraphLog(data));
+      }
 
-    console.log('current session = ');
-  }, [graphLogDispatch, sessionId]);
+      return null;
+    };
+    spiralGraphs((payload: string) => handleSetPayload(payload)); //working
+  }, [graphLogDispatch]);
 
   return (
     <Fragment>
-      {/* <div className="row">
-        {barState.type === "bar" && (
-          <div className="col-md-6">
-            <Bar data={barState.data} options={barState.options} />
+      <div className="ml-5">
+        <div>
+          <h4>Available Graph Sessions</h4>
+        </div>
+        <p>Select Layout</p>
+        <div
+          className="btn-group center m-2 new"
+          role="group"
+          aria-label="Basic outlined example"
+        >
+          <Button
+            type="button"
+            onClick={() => handleSetGraphLayout('1_graph')}
+            className={`btn btn-outline-primary ${
+              graphLayout === '1_graph' ? 'active' : ''
+            }`}
+          >
+            1 Graph
+          </Button>
+          <Button
+            type="button"
+            onClick={() => handleSetGraphLayout('2_graph')}
+            className={`btn btn-outline-primary ${
+              graphLayout === '2_graph' ? 'active' : ''
+            }`}
+          >
+            2 Graphs
+          </Button>
+          <Button
+            type="button"
+            onClick={() => handleSetGraphLayout('3_graph')}
+            className={`btn btn-outline-primary ${
+              graphLayout === '3_graph' ? 'active' : ''
+            }`}
+          >
+            3 Graphs
+          </Button>
+        </div>
+
+        {graphLayout === '1_graph' && (
+          <div>
+            <div className="row ml-2 scroll-y-allow">
+              {sessionData.map((session) => (
+                <React.Fragment>
+                  <div
+                    style={{
+                      border: '1px solid #2e2e2e',
+                      borderRadius: 5,
+                      padding: 2,
+                      margin: 2,
+                    }}
+                  >
+                    <Button
+                      key={session.sessionId}
+                      variant="light"
+                      onClick={() =>
+                        handleSetGraphOneSession(session.sessionId)
+                      }
+                    >
+                      <span>
+                        <Badge
+                          pill
+                          variant="dark"
+                          className="font-thin pl-3 pr-3 pb-2 pt-2"
+                        >
+                          {session.sessionId}
+                          <span style={{ marginRight: '20px' }}></span>
+                        </Badge>
+                      </span>
+                    </Button>
+                    <Button
+                      variant="light"
+                      onClick={() => handleDeleteSession(session.sessionId)}
+                    >
+                      <FontAwesomeIcon icon={faTimesCircle} />
+                    </Button>
+                  </div>
+                </React.Fragment>
+              ))}
+            </div>
+            {graphOneSession ? (
+              <GraphSessionData sessionId={graphOneSession} />
+            ) : (
+              ''
+            )}
           </div>
         )}
-        {barState.type === "bar" && (
-          <div className="col-md-6">
-            <Bar data={barState.data} options={barState.options} />
-          </div>
+        {graphLayout === '2_graph' && (
+          <React.Fragment>
+            <div className="row">
+              <div className="col-lg-6">
+                <div className="row ml-2 scroll-y-allow">
+                  {sessionData.map((session) => (
+                    <React.Fragment>
+                      <div
+                        style={{
+                          border: '1px solid #2e2e2e',
+                          borderRadius: 5,
+                          padding: 2,
+                          margin: 2,
+                        }}
+                      >
+                        <Button
+                          key={session.sessionId}
+                          variant="light"
+                          onClick={() =>
+                            handleSetGraphTwoSessionId(session.sessionId, 1)
+                          }
+                        >
+                          <span>
+                            <Badge
+                              pill
+                              variant="dark"
+                              className="font-thin pl-3 pr-3 pb-2 pt-2"
+                            >
+                              {session.sessionId}
+                              <span style={{ marginRight: '20px' }}></span>
+                            </Badge>
+                          </span>
+                        </Button>
+                        <Button
+                          variant="light"
+                          onClick={() => handleDeleteSession(session.sessionId)}
+                        >
+                          <FontAwesomeIcon icon={faTimesCircle} />
+                        </Button>
+                      </div>
+                    </React.Fragment>
+                  ))}
+                </div>
+                {twoGraphSession.graphOneSessionId && (
+                  <React.Fragment>
+                    <GraphSessionData
+                      sessionId={twoGraphSession.graphOneSessionId}
+                    />
+                  </React.Fragment>
+                )}
+              </div>
+
+              <div className="col-lg-6">
+                <div className="row ml-2 scroll-y-allow">
+                  {sessionData.map((session) => (
+                    <React.Fragment>
+                      <div
+                        style={{
+                          border: '1px solid #2e2e2e',
+                          borderRadius: 5,
+                          padding: 2,
+                          margin: 2,
+                        }}
+                      >
+                        <Button
+                          key={session.sessionId}
+                          variant="light"
+                          onClick={() =>
+                            handleSetGraphTwoSessionId(session.sessionId, 2)
+                          }
+                        >
+                          <span>
+                            <Badge
+                              pill
+                              variant="dark"
+                              className="font-thin pl-3 pr-3 pb-2 pt-2"
+                            >
+                              {session.sessionId}
+                              <span style={{ marginRight: '20px' }}></span>
+                            </Badge>
+                          </span>
+                        </Button>
+                        <Button
+                          variant="light"
+                          onClick={() => handleDeleteSession(session.sessionId)}
+                        >
+                          <FontAwesomeIcon icon={faTimesCircle} />
+                        </Button>
+                      </div>
+                    </React.Fragment>
+                  ))}
+                </div>
+                {twoGraphSession.graphTwoSessionId && (
+                  <React.Fragment>
+                    <GraphSessionData
+                      sessionId={twoGraphSession.graphTwoSessionId}
+                    />
+                  </React.Fragment>
+                )}
+              </div>
+            </div>
+          </React.Fragment>
         )}
-      </div> */}
-      {barState.type === 'bar' && (
-        <Bar data={barState.data} options={barState.options} />
-      )}
-      {barState.type === 'line' && (
-        <Line data={barState.data} options={barState.options} />
-      )}
-      {barState.type === 'radar' && (
-        <Radar data={barState.data} options={barState.options} />
-      )}
-      {barState.type === 'doughnut' && (
-        <Doughnut data={barState.data} options={barState.options} />
-      )}
-      {barState.type === 'polarArea' && (
-        <Polar data={barState.data} options={barState.options} />
-      )}
-      {barState.type === 'bubble' && (
-        <Bubble data={barState.data} options={barState.options} />
-      )}
-      {barState.type === 'scatter' && (
-        <Scatter data={barState.data} options={barState.options} />
-      )}
+        {graphLayout === '3_graph' && (
+          <React.Fragment>
+            <div className="row">
+              <div className="col-lg-4">
+                <div className="row ml-2 scroll-y-allow">
+                  {sessionData.map((session) => (
+                    <React.Fragment>
+                      <div
+                        style={{
+                          border: '1px solid #2e2e2e',
+                          borderRadius: 5,
+                          padding: 2,
+                          margin: 2,
+                        }}
+                      >
+                        <Button
+                          key={session.sessionId}
+                          variant="light"
+                          onClick={() =>
+                            handleSetGraphThreeSessionId(session.sessionId, 1)
+                          }
+                        >
+                          <span>
+                            <Badge
+                              pill
+                              variant="dark"
+                              className="font-thin pl-3 pr-3 pb-2 pt-2"
+                            >
+                              {session.sessionId}
+                              <span style={{ marginRight: '20px' }}></span>
+                            </Badge>
+                          </span>
+                        </Button>
+                        <Button
+                          variant="light"
+                          onClick={() => handleDeleteSession(session.sessionId)}
+                        >
+                          <FontAwesomeIcon icon={faTimesCircle} />
+                        </Button>
+                      </div>
+                    </React.Fragment>
+                  ))}
+                </div>
+                {threeGraphSession.graphOneSessionId && (
+                  <React.Fragment>
+                    <GraphSessionData
+                      sessionId={threeGraphSession.graphOneSessionId}
+                    />
+                  </React.Fragment>
+                )}
+              </div>
+
+              <div className="col-lg-4">
+                <div className="row ml-2 scroll-y-allow">
+                  {sessionData.map((session) => (
+                    <React.Fragment>
+                      <div
+                        style={{
+                          border: '1px solid #2e2e2e',
+                          borderRadius: 5,
+                          padding: 2,
+                          margin: 2,
+                        }}
+                      >
+                        <Button
+                          key={session.sessionId}
+                          variant="light"
+                          onClick={() =>
+                            handleSetGraphThreeSessionId(session.sessionId, 2)
+                          }
+                        >
+                          <span>
+                            <Badge
+                              pill
+                              variant="dark"
+                              className="font-thin pl-3 pr-3 pb-2 pt-2"
+                            >
+                              {session.sessionId}
+                              <span style={{ marginRight: '20px' }}></span>
+                            </Badge>
+                          </span>
+                        </Button>
+                        <Button
+                          variant="light"
+                          onClick={() => handleDeleteSession(session.sessionId)}
+                        >
+                          <FontAwesomeIcon icon={faTimesCircle} />
+                        </Button>
+                      </div>
+                    </React.Fragment>
+                  ))}
+                </div>
+                {threeGraphSession.graphTwoSessionId && (
+                  <React.Fragment>
+                    <GraphSessionData
+                      sessionId={threeGraphSession.graphTwoSessionId}
+                    />
+                  </React.Fragment>
+                )}
+              </div>
+              <div className="col-lg-4">
+                <div className="row ml-2 scroll-y-allow">
+                  {sessionData.map((session) => (
+                    <React.Fragment>
+                      <div
+                        style={{
+                          border: '1px solid #2e2e2e',
+                          borderRadius: 5,
+                          padding: 2,
+                          margin: 2,
+                        }}
+                      >
+                        <Button
+                          key={session.sessionId}
+                          variant="light"
+                          onClick={() =>
+                            handleSetGraphThreeSessionId(session.sessionId, 3)
+                          }
+                        >
+                          <span>
+                            <Badge
+                              pill
+                              variant="dark"
+                              className="font-thin pl-3 pr-3 pb-2 pt-2"
+                            >
+                              {session.sessionId}
+                              <span style={{ marginRight: '20px' }}></span>
+                            </Badge>
+                          </span>
+                        </Button>
+                        <Button
+                          variant="light"
+                          onClick={() => handleDeleteSession(session.sessionId)}
+                        >
+                          <FontAwesomeIcon icon={faTimesCircle} />
+                        </Button>
+                      </div>
+                    </React.Fragment>
+                  ))}
+                </div>
+                {threeGraphSession.graphThreeSessionId && (
+                  <React.Fragment>
+                    <GraphSessionData
+                      sessionId={threeGraphSession.graphThreeSessionId}
+                    />
+                  </React.Fragment>
+                )}
+              </div>
+            </div>
+          </React.Fragment>
+        )}
+
+        {sessionData.length === 0 && 'No available sessions'}
+      </div>
     </Fragment>
   );
 };

@@ -62,10 +62,29 @@ function tablePrinter(cb: Function) {
   });
   socket.on('setTablePrinter', (data: any) => cb(data));
 }
+function combinedPrinter(cb: Function) {
+  console.log('inside combined printer logs');
+  socket.on('connect', function () {
+    try {
+      socket.emit('room', 'myRoom');
+      console.log('entered room');
+    } catch (error) {
+      return combinedPrinter(cb);
+    }
+  });
+  socket.on('setCombinedPrinter', (data: any) => cb(data));
+}
 
 //   socket.on("test", (timestamp) => cb(null, timestamp));
 //   socket.emit("test", timestamp);
 // }
-export { spiralLogs, spiralGraphs, simplePrinter, htmlPrinter, tablePrinter };
+export {
+  spiralLogs,
+  spiralGraphs,
+  simplePrinter,
+  htmlPrinter,
+  tablePrinter,
+  combinedPrinter,
+};
 
 // {"sessionId":"results","label": "result 1:", "value":"1"}

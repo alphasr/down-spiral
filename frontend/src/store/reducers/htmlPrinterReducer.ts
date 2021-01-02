@@ -13,7 +13,7 @@ export interface IHtmlPrinterPayload {
 export const initialGraphLogsState: IHtmlPrinterState = {
   data: [
     {
-      sessionId: '12123',
+      sessionId: '0',
       htmlPayload: `<div class="none"> <h1 style="color: red;" > something is crazy </h1> </div>`,
     },
   ],

@@ -8,6 +8,7 @@ import TableLog from './pages/TablePrinterPage';
 import Menu from './components/shared/Menu';
 import HtmlPrinter from './pages/HtmlPrinter';
 import SimplePrinter from './pages/SimplePrinterPage';
+import CombinedPrinterLog from './pages/CombinedPrinterPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/html-printer" exact component={HtmlPrinter} />
         <Route path="/graph-printer" exact component={Graph} />
         <Route path="/table-printer" exact component={TableLog} />
+        <Route path="/combined-printer" exact component={CombinedPrinterLog} />
         <Route path="/" exact component={TableLog} />
       </Switch>
     </React.Fragment>

@@ -32,6 +32,9 @@ const Menu = () => {
             <Button onClick={() => changeRoute(routeNames.TABLE_PRINTER)}>
               Table Printer
             </Button>
+            <Button onClick={() => changeRoute(routeNames.COMBINED_PRINTER)}>
+              Combined Printer
+            </Button>
           </ButtonGroup>
         </div>
       </div>

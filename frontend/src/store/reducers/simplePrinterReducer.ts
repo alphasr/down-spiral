@@ -1,4 +1,4 @@
-import * as types from "../types";
+import * as types from '../types';
 
 export interface ISimplePrinter {
   log_data: ISimplePrinterPayload[];
@@ -16,11 +16,11 @@ export interface ISimplePrinterPayload {
 const initialSimplePrinterState: ISimplePrinter = {
   log_data: [
     {
-      sessionId: "123213",
+      sessionId: '0',
       data: [
-        { id: "1", resultLabel: "adfad", resultValue: "" },
-        { id: "2", resultLabel: "adfas", resultValue: "asdfasdfdsaf" },
-        { id: "3", resultLabel: "adf", resultValue: "asdfasdfasdfafds" },
+        { id: '1', resultLabel: 'adfad', resultValue: '' },
+        { id: '2', resultLabel: 'adfas', resultValue: 'asdfasdfdsaf' },
+        { id: '3', resultLabel: 'adf', resultValue: 'asdfasdfasdfafds' },
       ],
     },
   ],
@@ -40,7 +40,7 @@ export const simplePrinterReducer = (
 
   switch (type) {
     case types.SET_SIMPLE_PRINTER_LOG: {
-      console.log("inside set simple printer reducer", JSON.stringify(payload));
+      console.log('inside set simple printer reducer', JSON.stringify(payload));
       if (
         state.log_data.find(
           (session) => session.sessionId === addSessionPayload.sessionId
