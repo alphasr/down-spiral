@@ -1,17 +1,14 @@
-import React, { Dispatch, Fragment, useEffect, useState } from 'react';
-import { Table } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { spiralLogs, tablePrinter } from '../../api';
+import React, { Dispatch, Fragment, useEffect, useState } from "react";
+import { Table } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { tablePrinter } from "../../api";
 import {
   ITableLogActions,
   setTableHeaderLog,
   setTableLog,
-} from '../../store/actions/tableLogActions';
-import { AppState } from '../../store/reducers';
-import {
-  ITableData,
-  ITableDataSingleton,
-} from '../../store/reducers/tablePrinterReducer';
+} from "../../store/actions/tableLogActions";
+import { AppState } from "../../store/reducers";
+import { ITableData } from "../../store/reducers/tablePrinterReducer";
 
 interface IProps {
   sessionId: string;
@@ -36,7 +33,7 @@ const TableSessions: React.FC<IProps> = ({ sessionId }) => {
       const parsedPayload: any = JSON.parse(payload);
 
       // const newPayload: ITableData = parsedPayload;
-      if (typeof parsedPayload[0] === 'string') {
+      if (typeof parsedPayload[0] === "string") {
         return tableLogDispatch(setTableHeaderLog(parsedPayload));
       }
 
@@ -49,10 +46,11 @@ const TableSessions: React.FC<IProps> = ({ sessionId }) => {
   const getData = (payload: any) => {
     let data: any[] = [];
     for (const key in payload) {
-      data.push(<td key={key}>{payload[key].toString()}</td>);
+      if (payload[key]) data.push(<td key={key}>{payload[key]}</td>);
     }
 
-    return data.map((datum) => datum);
+    const jsx = data.map((datum) => datum);
+    return jsx ? <tr>{jsx}</tr> : null;
   };
 
   return (
@@ -72,11 +70,9 @@ const TableSessions: React.FC<IProps> = ({ sessionId }) => {
         </thead>
         <tbody>
           {currentSession?.data?.map(
-            (datum: ITableDataSingleton) =>
-              datum.id && (
-                <React.Fragment key={datum.id}>
-                  <tr>{getData(datum)}</tr>
-                </React.Fragment>
+            (datum: any) =>
+              datum.i && (
+                <React.Fragment key={datum.id}>{getData(datum)}</React.Fragment>
               )
           )}
         </tbody>

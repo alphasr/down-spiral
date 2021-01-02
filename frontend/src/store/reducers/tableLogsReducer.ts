@@ -20,7 +20,7 @@ export interface ITableLogsState {
 
 export interface ITableData {
   sessionId: string;
-  header?: string[]; // must have unique header names
+  header: string[]; // must have unique header names
   data: any[]; //must have id
 }
 
@@ -91,7 +91,7 @@ export const initialTableLogsState: ITableLogsState = {
   ],
 };
 
-export const tablePrinterReducer = (
+export const tableLogReducer = (
   state: ITableLogsState = initialTableLogsState,
   action: {
     type:
@@ -111,63 +111,15 @@ export const tablePrinterReducer = (
   switch (type) {
     case types.SET_TABLE_DATA_LOG: {
       console.log("payload in reducer = ", JSON.stringify(tablePayload));
+      let tempObj = tablePayload.data[0];
 
-      let tempState = state.sessionData;
+      console.log(JSON.stringify(tempObj));
+      let temp = JSON.parse(tempObj);
+      console.log("stringified row ", temp);
 
-      if (
-        state.sessionData.find(
-          (session) => session.sessionId === tablePayload.sessionId
-        )
-      ) {
-        console.log("found session id");
-
-        const sessionIndex = (session: ITableData) =>
-          session.sessionId === tablePayload?.sessionId;
-        const dataIndex = state.sessionData.findIndex(sessionIndex);
-
-        const newSession: ITableData = tempState[dataIndex];
-
-        //adding row to row []
-        tablePayload.data?.forEach((data) => newSession.data.push(data));
-
-        //adding header which is missing
-        newSession.data?.forEach((dataSingleton) => {
-          console.log("inside for each");
-          let name: string;
-          for (name in dataSingleton) {
-            if (name)
-              if (!newSession.header!.find((value) => value === name)) {
-                console.log("found difference");
-                newSession.header!.push(name);
-              }
-          }
-        });
-        tempState[dataIndex] = newSession;
-        console.log("new state = ", JSON.stringify(tempState[dataIndex]));
-        return { ...state, sessionData: tempState };
-      } else {
-        const newSession: ITableData = {
-          sessionId: tablePayload.sessionId,
-          data: tablePayload.data,
-          header: [""],
-        };
-        if (!newSession.header) newSession.header = [""];
-
-        newSession.data.forEach((dataSingleton) => {
-          let name: string;
-
-          for (name in dataSingleton) {
-            if (name)
-              if (!newSession.header!.find((value) => value === name)) {
-                console.log("found difference");
-                newSession.header!.push(name);
-              }
-          }
-        });
-        tempState.push(newSession);
-        return { ...state, sessionData: tempState };
+      for (var name in tempObj) {
+        console.log("inside for loop", name);
       }
-
       // if (
       //   state.sessionData.find(
       //     (session) => session.sessionId === tablePayload.sessionId
@@ -177,26 +129,16 @@ export const tablePrinterReducer = (
       //     session.sessionId === tablePayload?.sessionId;
       //   const tempData = state.sessionData;
       //   const dataIndex = state.sessionData.findIndex(sessionIndex);
-      //   // var obj = JSON.parse(tablePayload.data[0]);
-
-      //   let name;
-      //   for (name in tablePayload.data[0]) {
-      //     console.log('Inside reducer table', name);
-      //   }
-
-      //   // ////////////////////
-
-      //   // //////////////////
-      //   // tablePayload?.data.forEach((datum) =>
-      //   //   tempData[dataIndex].data.push(datum)
-      //   // );
-      //   // tempData[dataIndex].header = tablePayload.header;
-      //   // if (state.sessionData[dataIndex].data === tempData[dataIndex].data)
-      //   //   return state;
-      //   // return { ...state, sessionData: tempData };
-      //   return state;
+      //   tablePayload?.data.forEach((datum) =>
+      //     tempData[dataIndex].data.push(datum)
+      //   );
+      //   tempData[dataIndex].header = tablePayload.header;
+      //   if (state.sessionData[dataIndex].data === tempData[dataIndex].data)
+      //     return state;
+      //   return { ...state, sessionData: tempData };
       // }
       // return { ...state, sessionData: [...state.sessionData, tableData] };
+      return state;
     }
     case types.DELETE_TABLE_SESSION: {
       const newState = state.sessionData.filter(
@@ -214,4 +156,4 @@ export const tablePrinterReducer = (
 // client is subscribing with ::: {"sessionId":"results2","rowData":[{"result":"rolo","i":"1","elaspsed":"rolo"}]}
 // client is subscribing with ::: {"sessionId":"results2","rowData":[{"result":"kolo","i":"2"}]}
 // client is subscribing with ::: {"sessionId":"results2","rowData":[{"result":"jj","i":"3","elaspsed":"jj"}]}
-// client is subscribing with ::: {"sessionId":"results2","rowData":[{"result":"kfing","i":"4"}]}letlet
+// client is subscribing with ::: {"sessionId":"results2","rowData":[{"result":"kfing","i":"4"}]}
