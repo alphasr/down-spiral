@@ -1,15 +1,15 @@
-import React, { Dispatch, Fragment, useEffect, useState } from 'react';
-import { Table } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { tablePrinter } from '../../api';
+import React, { Dispatch, Fragment, useEffect, useState } from "react";
+import { Table } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { tablePrinter } from "../../api";
 import {
   ITableLogActions,
   setTableHeaderLog,
   setTableLog,
-} from '../../store/actions/tableLogActions';
-import { AppState } from '../../store/reducers';
-import { ITableData } from '../../store/reducers/tablePrinterReducer';
-import parse from 'html-react-parser';
+} from "../../store/actions/tableLogActions";
+import { AppState } from "../../store/reducers";
+import { ITableData } from "../../store/reducers/tablePrinterReducer";
+import parse from "html-react-parser";
 
 interface IProps {
   sessionId: string;
@@ -34,7 +34,7 @@ const TableSessions: React.FC<IProps> = ({ sessionId }) => {
       const parsedPayload: any = JSON.parse(payload);
 
       // const newPayload: ITableData = parsedPayload;
-      if (typeof parsedPayload[0] === 'string') {
+      if (typeof parsedPayload[0] === "string") {
         return tableLogDispatch(setTableHeaderLog(parsedPayload));
       }
 
@@ -45,13 +45,13 @@ const TableSessions: React.FC<IProps> = ({ sessionId }) => {
   }, [sessionId]);
 
   const getData = (payload: any) => {
-    let data: string = '';
+    let data: string = "";
     for (const key in payload) {
-      console.log('column data', payload[key]);
+      console.log("column data", payload[key]);
       if (payload[key]) data += `<td key=${key}>${payload[key]}</td>`;
     }
 
-    return data ? `<tr>${data}</tr>` : '';
+    return data ? `<tr>${data}</tr>` : "";
   };
 
   return (
@@ -72,7 +72,7 @@ const TableSessions: React.FC<IProps> = ({ sessionId }) => {
         <tbody>
           {currentSession?.data?.map(
             (datum: any) =>
-              datum.i && (
+              datum.id && (
                 <React.Fragment key={datum.id}>
                   {parse(getData(datum))}
                 </React.Fragment>
