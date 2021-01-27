@@ -56,6 +56,12 @@ ioServer.on('connection', (client) => {
 
     client.in('myRoom').emit('setCombinedPrinter', JSON.stringify(dataJson));
   });
+  client.on('CUSTOM_PRINTER', (data) => {
+    dataJson = JSON.parse(data);
+    console.log('client is subscribing with :::', JSON.stringify(dataJson));
+
+    client.in('myRoom').emit('setCustomPrinter', JSON.stringify(dataJson));
+  });
 });
 
 const port = 8000;

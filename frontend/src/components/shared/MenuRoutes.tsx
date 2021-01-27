@@ -28,6 +28,10 @@ export const routes: IRoute[] = [
     routeName: 'COMBINED-PRINTER',
     route: '/combined-printer',
   },
+  {
+    routeName: 'CUSTOM-PRINTER',
+    route: '/custom-printer',
+  },
 ];
 
 export const routeNames = {
@@ -37,4 +41,5 @@ export const routeNames = {
   GRAPH_PRINTER: 'GRAPH-PRINTER',
   HOME_PAGE: 'HOME-PAGE',
   COMBINED_PRINTER: 'COMBINED-PRINTER',
+  CUSTOM_PRINTER: 'CUSTOM-PRINTER',
 };

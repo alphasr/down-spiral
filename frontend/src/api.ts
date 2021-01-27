@@ -74,6 +74,18 @@ function combinedPrinter(cb: Function) {
   });
   socket.on('setCombinedPrinter', (data: any) => cb(data));
 }
+function spiralCustom(cb: Function) {
+  console.log('inside combined printer logs');
+  socket.on('connect', function () {
+    try {
+      socket.emit('room', 'myRoom');
+      console.log('entered room');
+    } catch (error) {
+      return spiralCustom(cb);
+    }
+  });
+  socket.on('setCustomPrinter', (data: any) => cb(data));
+}
 
 //   socket.on("test", (timestamp) => cb(null, timestamp));
 //   socket.emit("test", timestamp);
@@ -85,6 +97,7 @@ export {
   htmlPrinter,
   tablePrinter,
   combinedPrinter,
+  spiralCustom,
 };
 
 // {"sessionId":"results","label": "result 1:", "value":"1"}
