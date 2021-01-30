@@ -1,0 +1,61 @@
+UC0. Simple logging
+
+  1. User writes a long running program, mocked up by this pseudocode
+
+     for i in 0.. {
+        result := run long running task
+     }
+
+  2. User imports package or library in language appropriate manner 
+ 
+     import logging library
+
+     for i in 0.. {
+        result := run long running task
+     }
+
+   3. User configures loggers 
+ 
+     import logging library
+
+     configure_logger("localhost", 3000, "results", SIMPLE_PRINTER)
+
+     for i in 0.. {
+        result := run long running task
+     }
+
+   4. User logs data from running program
+
+     import logging library
+
+     configure_logger("localhost", 3000, "results", SIMPLE_PRINTER)
+
+     for i in 0.. {
+        result := run long running task
+
+        result_label := concat("result ", i)
+        result_line = concat(result_label, ": ", result)
+        log("results", result_line)
+     }
+
+   5. User turns on browser pointed at the logging server at address indicating a concrete logger "localhost:3000/log=results". 
+
+   6. User starts program.
+
+   7. Program runs and sends configuration for "results" to server at localhost:3000 as JSON.
+
+   8. Server receives configuration information, performs configuration.
+
+   9. Program continues running and sends data to "results" as JSON.
+
+  10. Server receives data, performs visualization.
+
+  11. The browser appends a line of text showing "result n: ..." where "..." indicates the result of the long running task and "n" is the number 0 for the first line, and 1, 2, 3, ... for successive lines. Example after 4 iterations:
+
+    result 0: asia
+    result 1: basia
+    result 2: casia
+    result 3: dasia
+
+  12. Proceed to 9
+

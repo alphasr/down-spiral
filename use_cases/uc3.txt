@@ -1,0 +1,60 @@
+UC3. Logging custom html
+
+  1. User writes a long running program, mocked up by this pseudocode
+
+     for i in 0.. {
+        result := run long running task
+     }
+
+  2. User imports package or library in language appropriate manner 
+ 
+     import logging library
+
+     for i in 0.. {
+        result := run long running task
+     }
+
+   3. User configures loggers to display data as HTML
+ 
+     import logging library
+
+     configure_logger("localhost", 3000, "results", HTML)
+
+     for i in 0.. {
+        result := run long running task
+     }
+     
+
+   4. User logs data from running program as well-formed HTML
+
+     import logging library
+
+     configure_logger("localhost", 3000, "results", HTML)
+
+     for i in 0.. {
+        result := run long running task
+        
+        result_line = concat("<s>", result, "</s>")
+        log("results", result_line)
+     }
+
+   5. User turns on browser pointed at the logging server at address indicating a concrete logger "localhost:3000/log=results". 
+
+   6. User starts program.
+
+   7. Program runs and sends configuration for "results" to server at localhost:3000 as JSON.
+
+   8. Server receives configuration information, performs configuration.
+
+   9. Program continues running and sends data to "results".
+
+  10. Server receives data, performs visualization.
+
+  11. The browser displays successive values of results, formatting them to be striken out as per the s HTML tag. Example after 4 iterations:
+
+    a̵s̵i̵a̵
+   b̵a̵s̵i̵a̵
+   c̵a̵s̵i̵a̵
+   d̵a̵s̵i̵a̵    
+
+  12. Proceed to 9

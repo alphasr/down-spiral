@@ -1,0 +1,141 @@
+UC8. Custom view composer
+
+  1. User writes a long running program, mocked up by this pseudocode
+
+     for i in 0.. {
+        start := current time
+        result := run long running task
+        duration := concat(current time - start, "s")
+     }
+
+  2. User imports package or library in language appropriate manner 
+ 
+     import logging library
+
+     for i in 0.. {
+        start := current time
+        result := run long running task
+        duration := concat(current time - start, "s")
+     }
+
+   3. User configures loggers to display data as a table and as a bar plot:
+ 
+     import logging library
+
+     configure_logger("localhost", 3000, "results", TABLE)
+     configure_logger("localhost", 3000, "elapsed_time", GRAPH, BAR_PLOT, "n", "seconds")
+
+     for i in 0.. {
+        start := current time
+        result := run long running task
+        duration := concat(current time - start, "s")
+     }
+
+   4. User configures a combined view for multiple loggers using a custom view composer called "my_view":
+ 
+     import logging library
+
+     configure_logger("localhost", 3000, "results", TABLE)
+     configure_logger("localhost", 3000, "elapsed_time", GRAPH, BAR_PLOT, "n", "seconds")
+     configure_view("localhost", 3000,  "results_and_elapsed_time", CUSTOM, "my_view", "results", "elapsed_time")
+
+     for i in 0.. {
+        start := current time
+        result := run long running task
+        duration := concat(current time - start, "s")
+     }
+
+
+   4a. Potentially the custom view composer can have configuration options:
+
+     configure_view("localhost", 3000,  ..., "results_and_elapsed_time", CUSTOM, "my_view", "results", "elapsed_time")
+
+   5. User logs data from running program to both "results" and "elapsed_time"
+
+     import logging library
+
+     configure_logger("localhost", 3000, "results", TABLE)
+     configure_logger("localhost", 3000, "elapsed_time", GRAPH, BAR_PLOT, "n", "seconds")
+     configure_view("localhost", 3000,  "results_and_elapsed_time", CUSTOM, "my_view", "results", "elapsed_time")
+     for i in 0.. {
+        start := current time
+        result := run long running task
+        duration := concat(current time - start, "s")
+        
+        log("results", ["i": i, "result": result])
+        log("elapsed_time", ["i": i, "elapsed": duration])
+     }
+
+   6. User writes a module (eg. Node module, git repo) in JS/TS implementing a specific API. Example of a very simple composer:
+
+   {name: "my_view",
+    compose: (domElement, loggers, options) => {
+        for (logger of loggers) {
+            let div = document.createElement("div");
+            div.appendChild(logger);
+            domElement.appendChild(div);
+        }
+    }}
+
+   7. User commits module to a module repository (eg. npmjs or GitHub).
+
+   8. User opens server configuation file (eg. a JSON file) and adds a line indicating where to find new module:
+
+    {"view_composers": {
+        "my_view": "https://www.npmjs.com/package/my_new_down_spiral_view_composer"
+    }}     
+
+   8a. User restarts server
+
+   9. User turns on browser pointed at the logging server at address indicating a concrete logger "localhost3000/log=results_and_elapsed_time". 
+
+  10. User starts program.
+
+  11. Program runs and sends configuration for "results_and_elapsed_time" to server at localhost:3000 as JSON. At this point "my_view" is fully installed and operational.
+  
+  11a. If "my_view" cannot be used, the call to the server returns an exception and halts the program.
+  
+  12. Server receives configuration information, performs configuration.  
+
+  13. Program continues running and sends data to "results" and "elapsed_time".
+
+  14. Server receives data, performs visualization using "results" and "elapsed_time" loggers and composes the results using the by "my_view" module.
+
+  15. The browser pointed at "results_and_elapsed_time" updates it's visualization. Example after 4 iterations (mind order):
+
+        +---+-------------+
+        | n | result      |
+        +---+-------------+
+        | 0 | asia        |
+        +---+-------------+
+        | 1 | basia       |
+        +---+-------------+
+        | 2 | casia       |
+        +---+-------------+
+        | 3 | dasia       |
+        +---+-------------+
+        
+            seconds ^
+            |
+        180 +         ███
+            |         ███
+        160 +         ███
+            |         ███
+        140 +         ███
+            |         ███
+        120 +         ███
+            |         ███
+        100 +         ███         
+            |         ███
+         80 +         ███
+            |         ███
+         60 +         ███
+            |         ███
+         40 +     ▉▉▉ ███
+            |     ▉▉▉ ███
+         20 +     ▉▉▉ ███ 
+            | ▂▂▂ ▉▉▉ ███ ▃▃▃ 
+            +--+---+---+---+---+--->
+               0   1   2   3   4   n
+
+  16. Proceed to 13
