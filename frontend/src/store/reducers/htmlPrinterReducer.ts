@@ -56,9 +56,12 @@ export const htmlPrinterReducer = (
           state.data[dataIndex].htmlPayload === tempData[dataIndex].htmlPayload
         )
           return state;
+        console.log('Added to previous session @ = ', Date.now());
 
         return { ...state, data: tempData };
       }
+      console.log('Added new session @ = ', Date.now());
+
       return {
         ...state,
         data: [...state.data, htmlDataPayload],

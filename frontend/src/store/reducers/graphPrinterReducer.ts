@@ -104,11 +104,14 @@ export const graphPrinterReducer = (
           state.sessionData[dataIndex].datasets === tempData[dataIndex].datasets
         )
           return state;
+        console.log('Added to previous session @ = ', Date.now());
 
         return { ...state, sessionData: tempData };
       }
+      console.log('Added new session @ = ', Date.now());
       return {
         ...state,
+
         sessionData: [...state.sessionData, graphDataPayload],
       };
     }
