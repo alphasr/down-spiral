@@ -143,7 +143,7 @@ Complete Usage
 ### Combined Printer
 
 <p>
-  <img src="public/images/combined-printer.png"  title="hover text">
+  <img src="public/images/combined-printer.PNG"  title="hover text">
 </p>
 COMBINED printer is a logger that logs the data from other chosen printers
 
