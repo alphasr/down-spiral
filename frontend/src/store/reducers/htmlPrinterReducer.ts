@@ -14,7 +14,7 @@ export const initialGraphLogsState: IHtmlPrinterState = {
   data: [
     {
       sessionId: '0',
-      htmlPayload: `<div class="none"> <h1 style="color: red;" > something is crazy </h1> </div>`,
+      htmlPayload: `<div class="none"> <h1 style="color: grey;" > This is HTML... </h1> </div>`,
     },
   ],
 };

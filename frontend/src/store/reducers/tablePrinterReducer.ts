@@ -38,28 +38,28 @@ export const initialTableLogsState: ITableLogsState = {
       header: ['i', 'timestamp', 'hostname', 'appName', 'priority'],
       data: [
         {
-          i: '123123hjasdf', //uuidv4(),
+          id: '123123hjasdf', //uuidv4(),
           timestamp: new Date(),
           hostName: 'sdf',
           appName: 'aa',
           priority: 'asdf',
         },
         {
-          i: '123123hjasdasdf', //uuidv4(),
+          id: '123123hjasdasdf', //uuidv4(),
           timestamp: new Date(),
           hostName: 'sdf',
           appName: 'aa',
           priority: 'asdf',
         },
         {
-          i: '123123hjassadf', //uuidv4(),
+          id: '123123hjassadf', //uuidv4(),
           timestamp: new Date(),
           hostName: 'sdf',
           appName: 'aa',
           priority: 'asdf',
         },
         {
-          i: '123123hjasdasdasdff', //uuidv4(),
+          id: '123123hjasdasdasdff', //uuidv4(),
           timestamp: new Date(),
           hostName: 'sdf',
           appName: 'aa',

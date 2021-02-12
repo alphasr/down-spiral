@@ -1,15 +1,15 @@
-import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { Dispatch, Fragment, useState } from "react";
-import { Button, Badge } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { Dispatch, Fragment, useState } from 'react';
+import { Button, Badge } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   deleteHtmlPrinterSession,
   IHtmlPrinterLogActions,
-} from "../../store/actions/htmlPrinterActions";
+} from '../../store/actions/htmlPrinterActions';
 
-import { AppState } from "../../store/reducers";
-import HtmlPrinterSessionData from "./HtmlPrinterSessionData";
+import { AppState } from '../../store/reducers';
+import HtmlPrinterSessionData from './HtmlPrinterSessionData';
 
 const HtmlPrinterSessions = () => {
   const { data } = useSelector((state: AppState) => state.htmlPrinter);
@@ -33,14 +33,14 @@ const HtmlPrinterSessions = () => {
     <Fragment>
       <div className="ml-5">
         <div>
-          <h4>Available Table Log Sessions</h4>
+          <h4>Available HTML Printer Log Sessions</h4>
         </div>
         <div className="row ml-2">
           {data.map((session) => (
             <React.Fragment key={session.sessionId}>
               <div
                 style={{
-                  border: "1px solid #2e2e2e",
+                  border: '1px solid #2e2e2e',
                   borderRadius: 5,
                   padding: 2,
                   margin: 2,
@@ -58,7 +58,7 @@ const HtmlPrinterSessions = () => {
                       className="font-thin pl-3 pr-3 pb-2 pt-2"
                     >
                       {session.sessionId}
-                      <span style={{ marginRight: "20px" }}></span>
+                      <span style={{ marginRight: '20px' }}></span>
                     </Badge>
                   </span>
                 </Button>
@@ -75,7 +75,7 @@ const HtmlPrinterSessions = () => {
         {currentSession && (
           <HtmlPrinterSessionData sessionId={currentSession} />
         )}
-        {data.length === 0 && "No available sessions"}
+        {data.length === 0 && 'No available sessions'}
       </div>
     </Fragment>
   );

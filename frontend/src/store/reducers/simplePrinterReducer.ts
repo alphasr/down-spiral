@@ -18,7 +18,7 @@ const initialSimplePrinterState: ISimplePrinter = {
     {
       sessionId: '0',
       data: [
-        { id: '1', resultLabel: 'adfad', resultValue: '' },
+        { id: '1', resultLabel: 'adfad', resultValue: 'jkjkhkjhjk' },
         { id: '2', resultLabel: 'adfas', resultValue: 'asdfasdfdsaf' },
         { id: '3', resultLabel: 'adf', resultValue: 'asdfasdfasdfafds' },
       ],

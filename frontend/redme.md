@@ -1,9 +1,5 @@
 > Installation guide and usage guide for DownSpiral
 
-<p>
-  <img src="public/images/logo512.png" width="350" title="hover text">
-  <img src="your_relative_path_here_number_2_large_name" width="350" alt="accessibility text">
-</p>
 # Installation Guide
 
 ## Perquisites
@@ -39,6 +35,9 @@
 
 Table printer is a logger that logs the data as HTML Table
 
+<p>
+  <img src="public/images/table-printer.PNG"  title="hover text">
+</p>
 #### Usage
 
 Accepts a json payload of type:
@@ -59,6 +58,9 @@ Complete Usage
 
 HTML printer is a logger that logs the data as HTML
 
+<p>
+  <img src="public/images/html-printer.PNG"  title="hover text">
+</p>
 #### Usage
 
 Accepts a json payload of type:
@@ -74,6 +76,9 @@ Complete Usage
 
 GRAPH printer is a logger that logs the data as Graph
 
+<p>
+  <img src="public/images/graph-printer.PNG"  title="hover text">
+</p>
 #### Supported Graphs
 
 - BAR
@@ -113,6 +118,10 @@ Complete Usage
 
 SIMPLE printer is a logger that logs the data as Key value pairs
 
+<p>
+  <img src="public/images/simple-printer.PNG"  title="hover text">
+  <img src="public/images/simple-printer-2.PNG"  title="hover text">
+</p>
 #### Usage
 
 Accepts a json payload of type:
@@ -133,6 +142,9 @@ Complete Usage
 
 ### Combined Printer
 
+<p>
+  <img src="public/images/combined-printer.png"  title="hover text">
+</p>
 COMBINED printer is a logger that logs the data from other chosen printers
 
 #### Usage

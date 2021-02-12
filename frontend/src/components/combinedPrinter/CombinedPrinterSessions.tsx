@@ -10,6 +10,7 @@ import {
 import { AppState } from '../../store/reducers';
 import GraphSessionData from '../graph/GraphSessionData';
 import HtmlPrinterSessionData from '../html/HtmlPrinterSessionData';
+import SimplePrinterSessionData from '../simplePrinter/SimplePrinterData';
 import TableSessionData from '../table/TableSessionData';
 
 const CombinedPrinterSessions = () => {
@@ -76,8 +77,8 @@ const CombinedPrinterSessions = () => {
         {currentSession && (
           <React.Fragment>
             <HtmlPrinterSessionData sessionId={currentSession} />
-            <GraphSessionData sessionId={currentSession} />
-            <TableSessionData sessionId={currentSession} />
+            {/* <GraphSessionData sessionId={currentSession} /> */}
+            <SimplePrinterSessionData sessionId={currentSession} />
           </React.Fragment>
         )}
         {data.length === 0 && 'No available sessions'}
