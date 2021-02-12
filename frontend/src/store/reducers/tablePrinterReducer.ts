@@ -122,6 +122,7 @@ export const tablePrinterReducer = (
         });
         tempState[dataIndex] = newSession;
         console.log('new state = ', JSON.stringify(tempState[dataIndex]));
+        console.log(Date.now());
         return { ...state, sessionData: tempState };
       } else {
         const newSession: ITableData = {
@@ -142,6 +143,7 @@ export const tablePrinterReducer = (
               }
           }
         });
+        console.log(Date.now());
         tempState.push(newSession);
         return { ...state, sessionData: tempState };
       }
